@@ -16,5 +16,10 @@ namespace SoloThreadGrab
         {
             InitializeComponent();
         }
+
+        private void buttonGrab_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Hello Git.");
+        }
     }
 }
