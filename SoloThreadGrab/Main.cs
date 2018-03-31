@@ -19,7 +19,7 @@ namespace SoloThreadGrab
 
         private void buttonGrab_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Hello Git.");
+            MessageBox.Show("Hello Git, post VS Update.");
         }
     }
 }
