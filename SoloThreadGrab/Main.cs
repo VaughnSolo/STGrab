@@ -9,12 +9,12 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
-
+using System.IO;
 namespace SoloThreadGrab
 {
     public partial class Main : Form
     {
-        private List<string> itemsToGrab;
+        private List<string> itemsToGrab, thumbs;
         public Main()
         {
             InitializeComponent();
@@ -28,7 +28,11 @@ namespace SoloThreadGrab
             string downloadString = client.DownloadString(textNewURL.Text);
             findThreadName(downloadString);
             itemsToGrab = findItems(downloadString);
+            thumbs = findThumbs(downloadString);
+            MessageBox.Show(itemsToGrab.Count + " " + thumbs.Count);
         }
+        // Load Selected Item to Preview Box
+
         // Get Thread Name For Folder
         private string findThreadName(string fetchedText)
         {
@@ -43,18 +47,23 @@ namespace SoloThreadGrab
         // Get List of All Item URLs
         private List<string> findItems(string fetchedText)
         {
-            int fileCount = 0;
             List<string> ret = new List<string>();
-            string test = "";
-            Regex fileRegex = new Regex("(?:a title=.*? href|a href)=\"\\/\\/(.{1,50}?\\.(?:gif?|webm))");
+            Regex fileRegex = new Regex(@"(?:a title=.*? href|a href)=\""\/\/(.{1,50}?\.(?:gif?|webm))");
             foreach (Match match in fileRegex.Matches(fetchedText))
             {
-                fileCount++;
                 ret.Add(match.Groups[1].Value);
-                test += match.Groups[1].Value + "\r\n";
             }
-            MessageBox.Show(test);
-            MessageBox.Show(fileCount.ToString());
+            return ret;
+        }
+        // Get List of All Thumbnail URLs
+        private List<string> findThumbs(string fetchedText)
+        {
+            List<string> ret = new List<string>();
+            Regex fileRegex = new Regex(@"<img src=""\/\/(.{1,50}\.jpg)");
+            foreach (Match match in fileRegex.Matches(fetchedText))
+            {
+                ret.Add(match.Groups[1].Value);
+            }
             return ret;
         }
     }
