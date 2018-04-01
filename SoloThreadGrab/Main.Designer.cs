@@ -30,15 +30,16 @@
         {
             this.buttonGrab = new System.Windows.Forms.Button();
             this.textNewURL = new System.Windows.Forms.TextBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.previewBox = new System.Windows.Forms.PictureBox();
+            this.checkBoxFiles = new System.Windows.Forms.CheckedListBox();
+            ((System.ComponentModel.ISupportInitialize)(this.previewBox)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonGrab
             // 
-            this.buttonGrab.Location = new System.Drawing.Point(197, 12);
+            this.buttonGrab.Location = new System.Drawing.Point(458, 10);
             this.buttonGrab.Name = "buttonGrab";
-            this.buttonGrab.Size = new System.Drawing.Size(75, 20);
+            this.buttonGrab.Size = new System.Drawing.Size(91, 23);
             this.buttonGrab.TabIndex = 0;
             this.buttonGrab.Text = "Start";
             this.buttonGrab.UseVisualStyleBackColor = true;
@@ -46,30 +47,44 @@
             // 
             // textNewURL
             // 
+            this.textNewURL.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.textNewURL.Location = new System.Drawing.Point(12, 12);
             this.textNewURL.Name = "textNewURL";
-            this.textNewURL.Size = new System.Drawing.Size(179, 20);
+            this.textNewURL.Size = new System.Drawing.Size(440, 21);
             this.textNewURL.TabIndex = 1;
             // 
-            // pictureBox1
+            // previewBox
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(65, 38);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(197, 211);
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
+            this.previewBox.Location = new System.Drawing.Point(324, 39);
+            this.previewBox.Name = "previewBox";
+            this.previewBox.Size = new System.Drawing.Size(225, 244);
+            this.previewBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.previewBox.TabIndex = 2;
+            this.previewBox.TabStop = false;
+            // 
+            // checkBoxFiles
+            // 
+            this.checkBoxFiles.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxFiles.FormattingEnabled = true;
+            this.checkBoxFiles.Location = new System.Drawing.Point(12, 39);
+            this.checkBoxFiles.Name = "checkBoxFiles";
+            this.checkBoxFiles.Size = new System.Drawing.Size(303, 244);
+            this.checkBoxFiles.TabIndex = 3;
+            this.checkBoxFiles.SelectedIndexChanged += new System.EventHandler(this.checkBoxFiles_SelectedIndexChanged);
             // 
             // Main
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Controls.Add(this.pictureBox1);
+            this.ClientSize = new System.Drawing.Size(563, 299);
+            this.Controls.Add(this.previewBox);
+            this.Controls.Add(this.checkBoxFiles);
             this.Controls.Add(this.textNewURL);
             this.Controls.Add(this.buttonGrab);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.Name = "Main";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.previewBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -79,7 +94,8 @@
 
         private System.Windows.Forms.Button buttonGrab;
         private System.Windows.Forms.TextBox textNewURL;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox previewBox;
+        private System.Windows.Forms.CheckedListBox checkBoxFiles;
     }
 }
 
