@@ -23,6 +23,26 @@ namespace SoloThreadGrab
                 }
             }
         }
+        // Setup Download Path
+        public static string DownloadFolderSetup(string path)
+        {
+            if (Directory.Exists(path))
+            {
+                return "Download folder exists.";
+            }
+            else
+            {
+                try
+                {
+                    Directory.CreateDirectory(path);
+                }
+                catch
+                {
+                    return "Invalid path.";
+                }
+            }
+            return "";
+        }
         // Check if File Exists
         public static bool IsSaved(string path)
         {

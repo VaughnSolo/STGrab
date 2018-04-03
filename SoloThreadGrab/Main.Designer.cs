@@ -33,34 +33,37 @@
             this.previewBox = new System.Windows.Forms.PictureBox();
             this.checkBoxFiles = new System.Windows.Forms.CheckedListBox();
             this.groupPreview = new System.Windows.Forms.GroupBox();
-            this.labelFileCount = new System.Windows.Forms.Label();
             this.labelCheckedCount = new System.Windows.Forms.Label();
+            this.labelFileCount = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.textThreadTitle = new System.Windows.Forms.TextBox();
             this.labelThreadTitle = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.groupDownload = new System.Windows.Forms.GroupBox();
+            this.textThreadFolder = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.buttonOutputSelect = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioNoFolders = new System.Windows.Forms.RadioButton();
             this.label3 = new System.Windows.Forms.Label();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.radioNoBoard = new System.Windows.Forms.RadioButton();
+            this.radioFullPath = new System.Windows.Forms.RadioButton();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textOutputPath = new System.Windows.Forms.TextBox();
+            this.progressBarDownload = new System.Windows.Forms.ProgressBar();
+            this.buttonDownload = new System.Windows.Forms.Button();
+            this.checkBoxCombine = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.previewBox)).BeginInit();
             this.groupPreview.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.groupDownload.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonGrab
             // 
             this.buttonGrab.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.buttonGrab.Location = new System.Drawing.Point(458, 5);
+            this.buttonGrab.Location = new System.Drawing.Point(458, 6);
             this.buttonGrab.Name = "buttonGrab";
-            this.buttonGrab.Size = new System.Drawing.Size(91, 23);
+            this.buttonGrab.Size = new System.Drawing.Size(91, 21);
             this.buttonGrab.TabIndex = 0;
             this.buttonGrab.Text = "Grab";
             this.buttonGrab.UseVisualStyleBackColor = true;
@@ -101,21 +104,13 @@
             this.groupPreview.Controls.Add(this.labelFileCount);
             this.groupPreview.Controls.Add(this.previewBox);
             this.groupPreview.Controls.Add(this.checkBoxFiles);
+            this.groupPreview.Enabled = false;
             this.groupPreview.Location = new System.Drawing.Point(18, 60);
             this.groupPreview.Name = "groupPreview";
             this.groupPreview.Size = new System.Drawing.Size(531, 268);
             this.groupPreview.TabIndex = 5;
             this.groupPreview.TabStop = false;
             this.groupPreview.Text = "Thread Item Preview";
-            // 
-            // labelFileCount
-            // 
-            this.labelFileCount.AutoSize = true;
-            this.labelFileCount.Location = new System.Drawing.Point(307, 246);
-            this.labelFileCount.Name = "labelFileCount";
-            this.labelFileCount.Size = new System.Drawing.Size(45, 15);
-            this.labelFileCount.TabIndex = 4;
-            this.labelFileCount.Text = "Found:";
             // 
             // labelCheckedCount
             // 
@@ -125,6 +120,15 @@
             this.labelCheckedCount.Size = new System.Drawing.Size(58, 15);
             this.labelCheckedCount.TabIndex = 5;
             this.labelCheckedCount.Text = "Checked:";
+            // 
+            // labelFileCount
+            // 
+            this.labelFileCount.AutoSize = true;
+            this.labelFileCount.Location = new System.Drawing.Point(307, 246);
+            this.labelFileCount.Name = "labelFileCount";
+            this.labelFileCount.Size = new System.Drawing.Size(45, 15);
+            this.labelFileCount.TabIndex = 4;
+            this.labelFileCount.Text = "Found:";
             // 
             // label1
             // 
@@ -153,71 +157,72 @@
             this.labelThreadTitle.TabIndex = 8;
             this.labelThreadTitle.Text = "Thread Title:";
             // 
-            // groupBox1
+            // groupDownload
             // 
-            this.groupBox1.Controls.Add(this.progressBar1);
-            this.groupBox1.Controls.Add(this.button2);
-            this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Controls.Add(this.panel1);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.textBox1);
-            this.groupBox1.Location = new System.Drawing.Point(18, 335);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(531, 158);
-            this.groupBox1.TabIndex = 9;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Download";
+            this.groupDownload.Controls.Add(this.checkBoxCombine);
+            this.groupDownload.Controls.Add(this.textThreadFolder);
+            this.groupDownload.Controls.Add(this.label4);
+            this.groupDownload.Controls.Add(this.buttonOutputSelect);
+            this.groupDownload.Controls.Add(this.panel1);
+            this.groupDownload.Controls.Add(this.label2);
+            this.groupDownload.Controls.Add(this.textOutputPath);
+            this.groupDownload.Enabled = false;
+            this.groupDownload.Location = new System.Drawing.Point(18, 335);
+            this.groupDownload.Name = "groupDownload";
+            this.groupDownload.Size = new System.Drawing.Size(531, 176);
+            this.groupDownload.TabIndex = 9;
+            this.groupDownload.TabStop = false;
+            this.groupDownload.Text = "Download";
             // 
-            // label2
+            // textThreadFolder
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 23);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(74, 15);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "Output Path:";
+            this.textThreadFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.textThreadFolder.Location = new System.Drawing.Point(167, 44);
+            this.textThreadFolder.Name = "textThreadFolder";
+            this.textThreadFolder.Size = new System.Drawing.Size(358, 21);
+            this.textThreadFolder.TabIndex = 15;
             // 
-            // textBox1
+            // label4
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.textBox1.Location = new System.Drawing.Point(86, 20);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(383, 21);
-            this.textBox1.TabIndex = 9;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 47);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(158, 15);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Thread Name (Folder Title):";
             // 
-            // radioButton1
+            // buttonOutputSelect
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(109, 3);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(231, 19);
-            this.radioButton1.TabIndex = 11;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "/Board Name/Thread Name/Files.type";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.buttonOutputSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
+            this.buttonOutputSelect.Location = new System.Drawing.Point(475, 20);
+            this.buttonOutputSelect.Name = "buttonOutputSelect";
+            this.buttonOutputSelect.Size = new System.Drawing.Size(50, 21);
+            this.buttonOutputSelect.TabIndex = 13;
+            this.buttonOutputSelect.Text = "Browse";
+            this.buttonOutputSelect.UseVisualStyleBackColor = true;
+            this.buttonOutputSelect.Click += new System.EventHandler(this.buttonOutputSelect_Click);
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.radioButton3);
+            this.panel1.Controls.Add(this.radioNoFolders);
             this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.radioButton2);
-            this.panel1.Controls.Add(this.radioButton1);
-            this.panel1.Location = new System.Drawing.Point(0, 47);
+            this.panel1.Controls.Add(this.radioNoBoard);
+            this.panel1.Controls.Add(this.radioFullPath);
+            this.panel1.Location = new System.Drawing.Point(0, 71);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(344, 78);
+            this.panel1.Size = new System.Drawing.Size(525, 78);
             this.panel1.TabIndex = 12;
             // 
-            // radioButton2
+            // radioNoFolders
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(109, 28);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(158, 19);
-            this.radioButton2.TabIndex = 12;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "/Thread Name/Files.type";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioNoFolders.AutoSize = true;
+            this.radioNoFolders.Location = new System.Drawing.Point(109, 53);
+            this.radioNoFolders.Name = "radioNoFolders";
+            this.radioNoFolders.Size = new System.Drawing.Size(143, 19);
+            this.radioNoFolders.TabIndex = 14;
+            this.radioNoFolders.Text = "Output Path/Files.type";
+            this.radioNoFolders.UseVisualStyleBackColor = true;
+            this.radioNoFolders.CheckedChanged += new System.EventHandler(this.FolderStruct_Changed);
             // 
             // label3
             // 
@@ -228,49 +233,88 @@
             this.label3.TabIndex = 13;
             this.label3.Text = "Folder Structure:";
             // 
-            // radioButton3
+            // radioNoBoard
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(109, 53);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(144, 19);
-            this.radioButton3.TabIndex = 14;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "/Files.type (No Folder)";
-            this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioNoBoard.AutoSize = true;
+            this.radioNoBoard.Location = new System.Drawing.Point(109, 28);
+            this.radioNoBoard.Name = "radioNoBoard";
+            this.radioNoBoard.Size = new System.Drawing.Size(222, 19);
+            this.radioNoBoard.TabIndex = 12;
+            this.radioNoBoard.Text = "Output Path/Thread Name/Files.type";
+            this.radioNoBoard.UseVisualStyleBackColor = true;
+            this.radioNoBoard.CheckedChanged += new System.EventHandler(this.FolderStruct_Changed);
             // 
-            // button1
+            // radioFullPath
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.button1.Location = new System.Drawing.Point(475, 20);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(50, 21);
-            this.button1.TabIndex = 13;
-            this.button1.Text = "Select";
-            this.button1.UseVisualStyleBackColor = true;
+            this.radioFullPath.AutoSize = true;
+            this.radioFullPath.Checked = true;
+            this.radioFullPath.Location = new System.Drawing.Point(109, 3);
+            this.radioFullPath.Name = "radioFullPath";
+            this.radioFullPath.Size = new System.Drawing.Size(295, 19);
+            this.radioFullPath.TabIndex = 11;
+            this.radioFullPath.TabStop = true;
+            this.radioFullPath.Text = "Output Path/Board Name/Thread Name/Files.type";
+            this.radioFullPath.UseVisualStyleBackColor = true;
+            this.radioFullPath.CheckedChanged += new System.EventHandler(this.FolderStruct_Changed);
             // 
-            // button2
+            // label2
             // 
-            this.button2.Location = new System.Drawing.Point(350, 47);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(175, 78);
-            this.button2.TabIndex = 15;
-            this.button2.Text = "Download";
-            this.button2.UseVisualStyleBackColor = true;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 23);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(74, 15);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Output Path:";
             // 
-            // progressBar1
+            // textOutputPath
             // 
-            this.progressBar1.Location = new System.Drawing.Point(0, 131);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(525, 23);
-            this.progressBar1.TabIndex = 16;
+            this.textOutputPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.textOutputPath.Location = new System.Drawing.Point(86, 20);
+            this.textOutputPath.Name = "textOutputPath";
+            this.textOutputPath.ReadOnly = true;
+            this.textOutputPath.Size = new System.Drawing.Size(383, 21);
+            this.textOutputPath.TabIndex = 9;
+            // 
+            // progressBarDownload
+            // 
+            this.progressBarDownload.Location = new System.Drawing.Point(199, 517);
+            this.progressBarDownload.Name = "progressBarDownload";
+            this.progressBarDownload.Size = new System.Drawing.Size(350, 52);
+            this.progressBarDownload.Step = 1;
+            this.progressBarDownload.TabIndex = 16;
+            // 
+            // buttonDownload
+            // 
+            this.buttonDownload.Enabled = false;
+            this.buttonDownload.Location = new System.Drawing.Point(18, 517);
+            this.buttonDownload.Name = "buttonDownload";
+            this.buttonDownload.Size = new System.Drawing.Size(175, 52);
+            this.buttonDownload.TabIndex = 15;
+            this.buttonDownload.Text = "Download";
+            this.buttonDownload.UseVisualStyleBackColor = true;
+            this.buttonDownload.Click += new System.EventHandler(this.buttonDownload_Click);
+            // 
+            // checkBoxCombine
+            // 
+            this.checkBoxCombine.AutoSize = true;
+            this.checkBoxCombine.Checked = true;
+            this.checkBoxCombine.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxCombine.Location = new System.Drawing.Point(6, 155);
+            this.checkBoxCombine.Name = "checkBoxCombine";
+            this.checkBoxCombine.Size = new System.Drawing.Size(200, 19);
+            this.checkBoxCombine.TabIndex = 15;
+            this.checkBoxCombine.Text = "Continue if Folder Already Exists";
+            this.checkBoxCombine.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBoxCombine.UseVisualStyleBackColor = true;
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(563, 505);
-            this.Controls.Add(this.groupBox1);
+            this.ClientSize = new System.Drawing.Size(563, 596);
+            this.Controls.Add(this.buttonDownload);
+            this.Controls.Add(this.progressBarDownload);
+            this.Controls.Add(this.groupDownload);
             this.Controls.Add(this.labelThreadTitle);
             this.Controls.Add(this.textThreadTitle);
             this.Controls.Add(this.label1);
@@ -280,11 +324,12 @@
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.Name = "Main";
             this.Text = "STGrab 1.0";
+            this.Load += new System.EventHandler(this.Main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.previewBox)).EndInit();
             this.groupPreview.ResumeLayout(false);
             this.groupPreview.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupDownload.ResumeLayout(false);
+            this.groupDownload.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -304,17 +349,20 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textThreadTitle;
         private System.Windows.Forms.Label labelThreadTitle;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.GroupBox groupDownload;
+        private System.Windows.Forms.Button buttonOutputSelect;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.RadioButton radioNoFolders;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioNoBoard;
+        private System.Windows.Forms.RadioButton radioFullPath;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.TextBox textOutputPath;
+        private System.Windows.Forms.Button buttonDownload;
+        private System.Windows.Forms.ProgressBar progressBarDownload;
+        private System.Windows.Forms.TextBox textThreadFolder;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox checkBoxCombine;
     }
 }
 

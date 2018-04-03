@@ -10,6 +10,7 @@ namespace SoloThreadGrab
     class ThreadObj
     {
         WebClient client;
+        string url;
         string fetchedText;
         // WebClient Initializer
         public ThreadObj(string address)
@@ -19,9 +20,14 @@ namespace SoloThreadGrab
                 UseDefaultCredentials = true
             };
             client.Headers.Add("User-Agent: Other");
+            url = address;
+            if (!(url.Contains("http://") || url.Contains("https://")))
+            {
+                url = "http://" + url;
+            }
             try
             {
-                fetchedText = client.DownloadString(address);
+                fetchedText = client.DownloadString(url);
             }
             catch
             {
@@ -60,7 +66,7 @@ namespace SoloThreadGrab
             }
             return ret;
         }
-        // Get Thread Name For Folder
+        // Get Thread Name
         public string GetThreadname()
         {
             string ret;
@@ -68,7 +74,27 @@ namespace SoloThreadGrab
             string endMarker = " - &quot;/";
             int titlePos = fetchedText.IndexOf(titleMarker) + titleMarker.Length;
             int titlePosEnd = fetchedText.IndexOf(endMarker);
+            if (titlePosEnd < 0)
+            {
+                return "";
+            }
             ret = fetchedText.Substring(titlePos, titlePosEnd - titlePos);
+            return ret;
+        }
+        // Get Board Name
+        public string GetBoard()
+        {
+            string ret;
+            Regex boardRegex = new Regex(@"\.org\/(.*?)\/.*");
+            ret = boardRegex.Match(url).Groups[1].Value;
+            return ret;
+        }
+        // Get Filename from URL
+        public string FilenameFromURL(string url)
+        {
+            string ret;
+            Regex nameRegex = new Regex(@".*\/(.*?\.(?:webm?|gif?|png?|jpg))");
+            ret = nameRegex.Match(url).Groups[1].Value;
             return ret;
         }
         // Get Single Thumbnail
