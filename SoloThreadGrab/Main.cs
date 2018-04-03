@@ -15,7 +15,7 @@ namespace SoloThreadGrab
     public partial class Main : Form
     {
 
-        private List<string> itemsToGrab, thumbnailURLs;
+        private List<string> itemURLs, thumbnailURLs;
         ThreadObj thread;
         private string thumbnailPath = "thumbnails";
 
@@ -38,15 +38,39 @@ namespace SoloThreadGrab
                 MessageBox.Show("Failed to fetch thread!");
                 return;
             }
-            string threadTitle = thread.GetThreadname();
-            itemsToGrab = thread.GetItemList();
-            foreach (string pic in itemsToGrab)
+            textThreadTitle.Text = thread.GetThreadname();
+            itemURLs = thread.GetItemList();
+            foreach (string pic in itemURLs)
             {
                 checkBoxFiles.Items.Add(pic, true);
             }
             thumbnailURLs = thread.GetThumbList();
             FileUtilities.ThumbFolderSetup(thumbnailPath);
+            SetFoundLabel(itemURLs.Count);
+            SetCheckedLabel(itemURLs.Count);
         }
+
+        private void SetFoundLabel(int count)
+        {
+            labelFileCount.Text = "Found: " + count;
+        }
+        private void SetCheckedLabel(int count)
+        {
+            labelCheckedCount.Text = "Checked: " + count;
+        }
+
+        private void checkBoxFiles_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            if (checkBoxFiles.CheckedIndices.Contains(checkBoxFiles.SelectedIndex))
+            {
+                SetCheckedLabel(checkBoxFiles.CheckedItems.Count - 1);
+            }
+            else
+            {
+                SetCheckedLabel(checkBoxFiles.CheckedItems.Count + 1);
+            }
+        }
+
 
         // Switch Image Preview Event
         private void checkBoxFiles_SelectedIndexChanged(object sender, EventArgs e)
