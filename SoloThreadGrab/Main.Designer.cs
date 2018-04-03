@@ -39,6 +39,7 @@
             this.textThreadTitle = new System.Windows.Forms.TextBox();
             this.labelThreadTitle = new System.Windows.Forms.Label();
             this.groupDownload = new System.Windows.Forms.GroupBox();
+            this.checkBoxCombine = new System.Windows.Forms.CheckBox();
             this.textThreadFolder = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.buttonOutputSelect = new System.Windows.Forms.Button();
@@ -51,7 +52,6 @@
             this.textOutputPath = new System.Windows.Forms.TextBox();
             this.progressBarDownload = new System.Windows.Forms.ProgressBar();
             this.buttonDownload = new System.Windows.Forms.Button();
-            this.checkBoxCombine = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.previewBox)).BeginInit();
             this.groupPreview.SuspendLayout();
             this.groupDownload.SuspendLayout();
@@ -72,9 +72,9 @@
             // textNewURL
             // 
             this.textNewURL.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.textNewURL.Location = new System.Drawing.Point(98, 6);
+            this.textNewURL.Location = new System.Drawing.Point(104, 6);
             this.textNewURL.Name = "textNewURL";
-            this.textNewURL.Size = new System.Drawing.Size(354, 21);
+            this.textNewURL.Size = new System.Drawing.Size(348, 21);
             this.textNewURL.TabIndex = 1;
             // 
             // previewBox
@@ -142,10 +142,10 @@
             // textThreadTitle
             // 
             this.textThreadTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.textThreadTitle.Location = new System.Drawing.Point(98, 33);
+            this.textThreadTitle.Location = new System.Drawing.Point(104, 33);
             this.textThreadTitle.Name = "textThreadTitle";
             this.textThreadTitle.ReadOnly = true;
-            this.textThreadTitle.Size = new System.Drawing.Size(451, 21);
+            this.textThreadTitle.Size = new System.Drawing.Size(445, 21);
             this.textThreadTitle.TabIndex = 7;
             // 
             // labelThreadTitle
@@ -153,9 +153,9 @@
             this.labelThreadTitle.AutoSize = true;
             this.labelThreadTitle.Location = new System.Drawing.Point(15, 36);
             this.labelThreadTitle.Name = "labelThreadTitle";
-            this.labelThreadTitle.Size = new System.Drawing.Size(75, 15);
+            this.labelThreadTitle.Size = new System.Drawing.Size(86, 15);
             this.labelThreadTitle.TabIndex = 8;
-            this.labelThreadTitle.Text = "Thread Title:";
+            this.labelThreadTitle.Text = "Thread Name:";
             // 
             // groupDownload
             // 
@@ -173,6 +173,19 @@
             this.groupDownload.TabIndex = 9;
             this.groupDownload.TabStop = false;
             this.groupDownload.Text = "Download";
+            // 
+            // checkBoxCombine
+            // 
+            this.checkBoxCombine.AutoSize = true;
+            this.checkBoxCombine.Checked = true;
+            this.checkBoxCombine.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxCombine.Location = new System.Drawing.Point(6, 155);
+            this.checkBoxCombine.Name = "checkBoxCombine";
+            this.checkBoxCombine.Size = new System.Drawing.Size(200, 19);
+            this.checkBoxCombine.TabIndex = 15;
+            this.checkBoxCombine.Text = "Continue if Folder Already Exists";
+            this.checkBoxCombine.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBoxCombine.UseVisualStyleBackColor = true;
             // 
             // textThreadFolder
             // 
@@ -220,7 +233,7 @@
             this.radioNoFolders.Name = "radioNoFolders";
             this.radioNoFolders.Size = new System.Drawing.Size(143, 19);
             this.radioNoFolders.TabIndex = 14;
-            this.radioNoFolders.Text = "Output Path/Files.type";
+            this.radioNoFolders.Text = "Output Path\\Files.type";
             this.radioNoFolders.UseVisualStyleBackColor = true;
             this.radioNoFolders.CheckedChanged += new System.EventHandler(this.FolderStruct_Changed);
             // 
@@ -240,7 +253,7 @@
             this.radioNoBoard.Name = "radioNoBoard";
             this.radioNoBoard.Size = new System.Drawing.Size(222, 19);
             this.radioNoBoard.TabIndex = 12;
-            this.radioNoBoard.Text = "Output Path/Thread Name/Files.type";
+            this.radioNoBoard.Text = "Output Path\\Thread Name\\Files.type";
             this.radioNoBoard.UseVisualStyleBackColor = true;
             this.radioNoBoard.CheckedChanged += new System.EventHandler(this.FolderStruct_Changed);
             // 
@@ -253,7 +266,7 @@
             this.radioFullPath.Size = new System.Drawing.Size(295, 19);
             this.radioFullPath.TabIndex = 11;
             this.radioFullPath.TabStop = true;
-            this.radioFullPath.Text = "Output Path/Board Name/Thread Name/Files.type";
+            this.radioFullPath.Text = "Output Path\\Board Name\\Thread Name\\Files.type";
             this.radioFullPath.UseVisualStyleBackColor = true;
             this.radioFullPath.CheckedChanged += new System.EventHandler(this.FolderStruct_Changed);
             // 
@@ -293,19 +306,6 @@
             this.buttonDownload.Text = "Download";
             this.buttonDownload.UseVisualStyleBackColor = true;
             this.buttonDownload.Click += new System.EventHandler(this.buttonDownload_Click);
-            // 
-            // checkBoxCombine
-            // 
-            this.checkBoxCombine.AutoSize = true;
-            this.checkBoxCombine.Checked = true;
-            this.checkBoxCombine.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxCombine.Location = new System.Drawing.Point(6, 155);
-            this.checkBoxCombine.Name = "checkBoxCombine";
-            this.checkBoxCombine.Size = new System.Drawing.Size(200, 19);
-            this.checkBoxCombine.TabIndex = 15;
-            this.checkBoxCombine.Text = "Continue if Folder Already Exists";
-            this.checkBoxCombine.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBoxCombine.UseVisualStyleBackColor = true;
             // 
             // Main
             // 
