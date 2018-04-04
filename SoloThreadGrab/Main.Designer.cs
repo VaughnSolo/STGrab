@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.buttonGrab = new System.Windows.Forms.Button();
             this.textNewURL = new System.Windows.Forms.TextBox();
             this.previewBox = new System.Windows.Forms.PictureBox();
@@ -322,6 +323,7 @@
             this.Controls.Add(this.textNewURL);
             this.Controls.Add(this.buttonGrab);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Main";
             this.Text = "STGrab 1.0";
             this.Load += new System.EventHandler(this.Main_Load);
