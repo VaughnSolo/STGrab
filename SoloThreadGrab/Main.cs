@@ -98,7 +98,6 @@ namespace SoloThreadGrab
             progressBarDownload.Maximum = itemURLs.Count;
             progressBarDownload.Value = 0;
             downloader = new WebClient();
-            //downloader.DownloadFileCompleted += DownloadFileCompleted;
             foreach (string file in itemURLs)
             {
                 string fileName = thread.FilenameFromURL(file);
@@ -107,27 +106,10 @@ namespace SoloThreadGrab
                 {
                     downloader.DownloadFile(new Uri("http://" + file), fullPath);
                 }
-                else
-                {
-                    progressBarDownload.PerformStep();
-                    if (progressBarDownload.Value == progressBarDownload.Maximum)
-                    {
-                        buttonDownload.Enabled = true;
-                    }
-                }
+                progressBarDownload.PerformStep();
             }
+            buttonDownload.Enabled = true;
         }
-        /*
-        // Completed File Event
-        private void DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
-        {
-            progressBarDownload.PerformStep();
-            if (progressBarDownload.Value == progressBarDownload.Maximum)
-            {
-                buttonDownload.Enabled = true;
-            }
-        }
-        */
         // Create the Output Path from Options
         private string GenerateOutputPath()
         {

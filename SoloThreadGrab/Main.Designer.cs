@@ -53,6 +53,8 @@
             this.textOutputPath = new System.Windows.Forms.TextBox();
             this.progressBarDownload = new System.Windows.Forms.ProgressBar();
             this.buttonDownload = new System.Windows.Forms.Button();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.previewBox)).BeginInit();
             this.groupPreview.SuspendLayout();
             this.groupDownload.SuspendLayout();
@@ -160,6 +162,8 @@
             // 
             // groupDownload
             // 
+            this.groupDownload.Controls.Add(this.radioButton2);
+            this.groupDownload.Controls.Add(this.radioButton1);
             this.groupDownload.Controls.Add(this.checkBoxCombine);
             this.groupDownload.Controls.Add(this.textThreadFolder);
             this.groupDownload.Controls.Add(this.label4);
@@ -180,7 +184,7 @@
             this.checkBoxCombine.AutoSize = true;
             this.checkBoxCombine.Checked = true;
             this.checkBoxCombine.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxCombine.Location = new System.Drawing.Point(6, 155);
+            this.checkBoxCombine.Location = new System.Drawing.Point(325, 155);
             this.checkBoxCombine.Name = "checkBoxCombine";
             this.checkBoxCombine.Size = new System.Drawing.Size(200, 19);
             this.checkBoxCombine.TabIndex = 15;
@@ -218,19 +222,20 @@
             // 
             // panel1
             // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.radioNoFolders);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.radioNoBoard);
             this.panel1.Controls.Add(this.radioFullPath);
-            this.panel1.Location = new System.Drawing.Point(0, 71);
+            this.panel1.Location = new System.Drawing.Point(6, 71);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(525, 78);
+            this.panel1.Size = new System.Drawing.Size(519, 78);
             this.panel1.TabIndex = 12;
             // 
             // radioNoFolders
             // 
             this.radioNoFolders.AutoSize = true;
-            this.radioNoFolders.Location = new System.Drawing.Point(109, 53);
+            this.radioNoFolders.Location = new System.Drawing.Point(102, 53);
             this.radioNoFolders.Name = "radioNoFolders";
             this.radioNoFolders.Size = new System.Drawing.Size(143, 19);
             this.radioNoFolders.TabIndex = 14;
@@ -241,7 +246,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 5);
+            this.label3.Location = new System.Drawing.Point(-1, 3);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(97, 15);
             this.label3.TabIndex = 13;
@@ -250,7 +255,7 @@
             // radioNoBoard
             // 
             this.radioNoBoard.AutoSize = true;
-            this.radioNoBoard.Location = new System.Drawing.Point(109, 28);
+            this.radioNoBoard.Location = new System.Drawing.Point(102, 28);
             this.radioNoBoard.Name = "radioNoBoard";
             this.radioNoBoard.Size = new System.Drawing.Size(222, 19);
             this.radioNoBoard.TabIndex = 12;
@@ -262,7 +267,7 @@
             // 
             this.radioFullPath.AutoSize = true;
             this.radioFullPath.Checked = true;
-            this.radioFullPath.Location = new System.Drawing.Point(109, 3);
+            this.radioFullPath.Location = new System.Drawing.Point(102, 3);
             this.radioFullPath.Name = "radioFullPath";
             this.radioFullPath.Size = new System.Drawing.Size(295, 19);
             this.radioFullPath.TabIndex = 11;
@@ -307,6 +312,29 @@
             this.buttonDownload.Text = "Download";
             this.buttonDownload.UseVisualStyleBackColor = true;
             this.buttonDownload.Click += new System.EventHandler(this.buttonDownload_Click);
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Checked = true;
+            this.radioButton1.Location = new System.Drawing.Point(6, 154);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(143, 19);
+            this.radioButton1.TabIndex = 16;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "Sequential Download";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Enabled = false;
+            this.radioButton2.Location = new System.Drawing.Point(155, 154);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(126, 19);
+            this.radioButton2.TabIndex = 17;
+            this.radioButton2.Text = "Parallel Download";
+            this.radioButton2.UseVisualStyleBackColor = true;
             // 
             // Main
             // 
@@ -365,6 +393,8 @@
         private System.Windows.Forms.TextBox textThreadFolder;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox checkBoxCombine;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton1;
     }
 }
 
