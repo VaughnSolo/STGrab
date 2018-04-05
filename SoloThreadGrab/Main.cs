@@ -97,18 +97,25 @@ namespace SoloThreadGrab
             buttonDownload.Enabled = false;
             progressBarDownload.Maximum = itemURLs.Count;
             progressBarDownload.Value = 0;
-            downloader = new WebClient();
-            foreach (string file in itemURLs)
+            if (radioDownSeq.Checked)
             {
-                string fileName = thread.FilenameFromURL(file);
-                string fullPath = path + "\\" + fileName;
-                if (!FileUtilities.IsSaved(fullPath))
+                downloader = new WebClient();
+                foreach (string file in itemURLs)
                 {
-                    downloader.DownloadFile(new Uri("http://" + file), fullPath);
+                    string fileName = thread.FilenameFromURL(file);
+                    string fullPath = path + "\\" + fileName;
+                    if (!FileUtilities.IsSaved(fullPath))
+                    {
+                        downloader.DownloadFile(new Uri("http://" + file), fullPath);
+                    }
+                    progressBarDownload.PerformStep();
                 }
-                progressBarDownload.PerformStep();
+                buttonDownload.Enabled = true;
             }
-            buttonDownload.Enabled = true;
+            else
+            {
+
+            }
         }
         // Create the Output Path from Options
         private string GenerateOutputPath()

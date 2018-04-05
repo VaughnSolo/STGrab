@@ -40,6 +40,8 @@
             this.textThreadTitle = new System.Windows.Forms.TextBox();
             this.labelThreadTitle = new System.Windows.Forms.Label();
             this.groupDownload = new System.Windows.Forms.GroupBox();
+            this.radioDownPar = new System.Windows.Forms.RadioButton();
+            this.radioDownSeq = new System.Windows.Forms.RadioButton();
             this.checkBoxCombine = new System.Windows.Forms.CheckBox();
             this.textThreadFolder = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -53,8 +55,6 @@
             this.textOutputPath = new System.Windows.Forms.TextBox();
             this.progressBarDownload = new System.Windows.Forms.ProgressBar();
             this.buttonDownload = new System.Windows.Forms.Button();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.previewBox)).BeginInit();
             this.groupPreview.SuspendLayout();
             this.groupDownload.SuspendLayout();
@@ -162,8 +162,8 @@
             // 
             // groupDownload
             // 
-            this.groupDownload.Controls.Add(this.radioButton2);
-            this.groupDownload.Controls.Add(this.radioButton1);
+            this.groupDownload.Controls.Add(this.radioDownPar);
+            this.groupDownload.Controls.Add(this.radioDownSeq);
             this.groupDownload.Controls.Add(this.checkBoxCombine);
             this.groupDownload.Controls.Add(this.textThreadFolder);
             this.groupDownload.Controls.Add(this.label4);
@@ -178,6 +178,29 @@
             this.groupDownload.TabIndex = 9;
             this.groupDownload.TabStop = false;
             this.groupDownload.Text = "Download";
+            // 
+            // radioDownPar
+            // 
+            this.radioDownPar.AutoSize = true;
+            this.radioDownPar.Enabled = false;
+            this.radioDownPar.Location = new System.Drawing.Point(155, 154);
+            this.radioDownPar.Name = "radioDownPar";
+            this.radioDownPar.Size = new System.Drawing.Size(126, 19);
+            this.radioDownPar.TabIndex = 17;
+            this.radioDownPar.Text = "Parallel Download";
+            this.radioDownPar.UseVisualStyleBackColor = true;
+            // 
+            // radioDownSeq
+            // 
+            this.radioDownSeq.AutoSize = true;
+            this.radioDownSeq.Checked = true;
+            this.radioDownSeq.Location = new System.Drawing.Point(6, 154);
+            this.radioDownSeq.Name = "radioDownSeq";
+            this.radioDownSeq.Size = new System.Drawing.Size(143, 19);
+            this.radioDownSeq.TabIndex = 16;
+            this.radioDownSeq.TabStop = true;
+            this.radioDownSeq.Text = "Sequential Download";
+            this.radioDownSeq.UseVisualStyleBackColor = true;
             // 
             // checkBoxCombine
             // 
@@ -313,29 +336,6 @@
             this.buttonDownload.UseVisualStyleBackColor = true;
             this.buttonDownload.Click += new System.EventHandler(this.buttonDownload_Click);
             // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(6, 154);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(143, 19);
-            this.radioButton1.TabIndex = 16;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Sequential Download";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Enabled = false;
-            this.radioButton2.Location = new System.Drawing.Point(155, 154);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(126, 19);
-            this.radioButton2.TabIndex = 17;
-            this.radioButton2.Text = "Parallel Download";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -393,8 +393,8 @@
         private System.Windows.Forms.TextBox textThreadFolder;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox checkBoxCombine;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioDownPar;
+        private System.Windows.Forms.RadioButton radioDownSeq;
     }
 }
 
