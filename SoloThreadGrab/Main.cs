@@ -89,6 +89,8 @@ namespace SoloThreadGrab
         // Download Checked Files to Selected Path
         private void buttonDownload_Click(object sender, EventArgs e)
         {
+            int countAlreadyDownloaded = 0;
+            int countFailedDownloaded = 0;
             string path = GenerateOutputPath();
             if (!SetupOutputFolder(path))
             {
@@ -106,7 +108,18 @@ namespace SoloThreadGrab
                     string fullPath = path + "\\" + fileName;
                     if (!FileUtilities.IsSaved(fullPath))
                     {
-                        downloader.DownloadFile(new Uri("http://" + file), fullPath);
+                        try
+                        {
+                            downloader.DownloadFile(new Uri("http://" + file), fullPath);
+                        }
+                        catch
+                        {
+                            countFailedDownloaded++;
+                        }
+                    }
+                    else
+                    {
+                        countAlreadyDownloaded++;
                     }
                     progressBarDownload.PerformStep();
                 }
@@ -116,6 +129,18 @@ namespace SoloThreadGrab
             {
 
             }
+            int countSuccess = itemURLs.Count - countAlreadyDownloaded - countFailedDownloaded;
+            string resultMessage = countSuccess + "/" + itemURLs.Count + " downloaded successfully.";
+            if (countAlreadyDownloaded > 0)
+            {
+                resultMessage += " [" + countAlreadyDownloaded + " already existed]";
+            }
+            if (countFailedDownloaded > 0)
+            {
+                resultMessage += " [" + countFailedDownloaded + " failed to download]";
+            }
+            MessageBox.Show(resultMessage);
+
         }
         // Create the Output Path from Options
         private string GenerateOutputPath()
