@@ -183,22 +183,22 @@
             // radioDownPar
             // 
             this.radioDownPar.AutoSize = true;
+            this.radioDownPar.Checked = true;
             this.radioDownPar.Location = new System.Drawing.Point(155, 154);
             this.radioDownPar.Name = "radioDownPar";
             this.radioDownPar.Size = new System.Drawing.Size(126, 19);
             this.radioDownPar.TabIndex = 17;
+            this.radioDownPar.TabStop = true;
             this.radioDownPar.Text = "Parallel Download";
             this.radioDownPar.UseVisualStyleBackColor = true;
             // 
             // radioDownSeq
             // 
             this.radioDownSeq.AutoSize = true;
-            this.radioDownSeq.Checked = true;
             this.radioDownSeq.Location = new System.Drawing.Point(6, 154);
             this.radioDownSeq.Name = "radioDownSeq";
             this.radioDownSeq.Size = new System.Drawing.Size(143, 19);
             this.radioDownSeq.TabIndex = 16;
-            this.radioDownSeq.TabStop = true;
             this.radioDownSeq.Text = "Sequential Download";
             this.radioDownSeq.UseVisualStyleBackColor = true;
             // 
@@ -330,7 +330,7 @@
             this.buttonDownload.Enabled = false;
             this.buttonDownload.Location = new System.Drawing.Point(18, 517);
             this.buttonDownload.Name = "buttonDownload";
-            this.buttonDownload.Size = new System.Drawing.Size(103, 52);
+            this.buttonDownload.Size = new System.Drawing.Size(175, 52);
             this.buttonDownload.TabIndex = 15;
             this.buttonDownload.Text = "Download";
             this.buttonDownload.UseVisualStyleBackColor = true;
@@ -338,9 +338,9 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(127, 517);
+            this.buttonCancel.Location = new System.Drawing.Point(18, 517);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(66, 52);
+            this.buttonCancel.Size = new System.Drawing.Size(175, 52);
             this.buttonCancel.TabIndex = 17;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
@@ -351,7 +351,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(563, 596);
-            this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonDownload);
             this.Controls.Add(this.progressBarDownload);
             this.Controls.Add(this.groupDownload);
@@ -361,6 +360,7 @@
             this.Controls.Add(this.groupPreview);
             this.Controls.Add(this.textNewURL);
             this.Controls.Add(this.buttonGrab);
+            this.Controls.Add(this.buttonCancel);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Main";

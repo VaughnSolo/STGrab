@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Net;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
 
@@ -18,6 +19,7 @@ namespace SoloThreadGrab
 
         private List<string> itemURLs, thumbnailURLs;
         private List<WebClient> asyncDownloads;
+        int countCompleteDownload, countPrevDownload, countFailedDownload, countCancelledDownload;
         ThreadObj thread;
         private string thumbnailPath = "thumbnails";
 
@@ -90,18 +92,20 @@ namespace SoloThreadGrab
         // Download Checked Files to Selected Path
         private void buttonDownload_Click(object sender, EventArgs e)
         {
-            int countAlreadyDownloaded = 0;
-            int countFailedDownloaded = 0;
+            countPrevDownload = 0;
+            countFailedDownload = 0;
+            countCompleteDownload = 0;
+            countCancelledDownload = 0;
             string path = GenerateOutputPath();
             if (!SetupOutputFolder(path))
             {
                 return;
             }
-            buttonDownload.Enabled = false;
             progressBarDownload.Maximum = itemURLs.Count;
             progressBarDownload.Value = 0;
             if (radioDownSeq.Checked)
             {
+                buttonDownload.Enabled = false;
                 WebClient downloader = new WebClient();
                 foreach (string file in itemURLs)
                 {
@@ -112,35 +116,26 @@ namespace SoloThreadGrab
                     {
                         try
                         {
-                            downloader.DownloadFileAsync(fullURI, fullPath);
+                            downloader.DownloadFile(fullURI, fullPath);
+                            countCompleteDownload++;
                         }
                         catch
                         {
-                            countFailedDownloaded++;
+                            countFailedDownload++;
                         }
                     }
                     else
                     {
-                        countAlreadyDownloaded++;
+                        countPrevDownload++;
                     }
                     progressBarDownload.PerformStep();
                 }
-                buttonDownload.Enabled = true;
-                int countSuccess = itemURLs.Count - countAlreadyDownloaded - countFailedDownloaded;
-                string resultMessage = countSuccess + "/" + itemURLs.Count + " downloaded successfully.";
-                if (countAlreadyDownloaded > 0)
-                {
-                    resultMessage += " [" + countAlreadyDownloaded + " already existed]";
-                }
-                if (countFailedDownloaded > 0)
-                {
-                    resultMessage += " [" + countFailedDownloaded + " failed to download]";
-                }
-                MessageBox.Show(resultMessage);
+                CheckAndDisplayDownloadComplete();
             }
-            else
+            else if (radioDownPar.Checked)
             {
                 asyncDownloads = new List<WebClient>();
+                buttonDownload.Visible = false;
                 foreach (string file in itemURLs)
                 {
                     WebClient downloader = new WebClient();
@@ -152,27 +147,67 @@ namespace SoloThreadGrab
                         try
                         {
                             downloader.DownloadFileAsync(fullURI, fullPath);
-                            downloader.DownloadFileCompleted += asyncDownloadCompleted;
+                            downloader.DownloadFileCompleted += AsyncDownloadCompleted;
                         }
                         catch
                         {
-                            countFailedDownloaded++;
+                            countFailedDownload++;
                             progressBarDownload.PerformStep();
                         }
                     }
                     else
                     {
-                        countAlreadyDownloaded++;
+                        countPrevDownload++;
                         progressBarDownload.PerformStep();
                     }
                     asyncDownloads.Add(downloader);
                 }
-                buttonDownload.Enabled = true;
+                CheckAndDisplayDownloadComplete();
             }
         }
-        private void asyncDownloadCompleted(object sender, AsyncCompletedEventArgs e)
+        // Handler for completed download event, increment tracker and check if complete.
+        private void AsyncDownloadCompleted(object sender, AsyncCompletedEventArgs e)
         {
             progressBarDownload.PerformStep();
+            if (!e.Cancelled)
+            {
+                Interlocked.Increment(ref countCompleteDownload);
+            }
+            else
+            {
+                Interlocked.Increment(ref countCancelledDownload);
+            }
+            CheckAndDisplayDownloadComplete();
+        }
+        // Display result message to user.
+        private void DisplayResults()
+        {
+            string resultMessage = countCompleteDownload + "/" + itemURLs.Count + " downloaded successfully.";
+            if (countPrevDownload > 0)
+            {
+                resultMessage += " [" + countPrevDownload + " already existed]";
+            }
+            if (countFailedDownload > 0)
+            {
+                resultMessage += " [" + countFailedDownload + " failed to download]";
+            }
+            if (countCancelledDownload > 0)
+            {
+                resultMessage += " [" + countCancelledDownload + " cancelled]";
+            }
+            MessageBox.Show(resultMessage);
+        }
+        // Check if all async downloads are completed/failed.
+        private void CheckAndDisplayDownloadComplete()
+        {
+            int countTotalComplete = countCompleteDownload + countFailedDownload + countPrevDownload + countCancelledDownload;
+            if (countTotalComplete == itemURLs.Count)
+            {
+                buttonDownload.Enabled = true;
+                buttonDownload.Visible = true;
+                progressBarDownload.Value = progressBarDownload.Maximum;
+                DisplayResults();
+            }
         }
         // Create the Output Path from Options
         private string GenerateOutputPath()
@@ -216,6 +251,7 @@ namespace SoloThreadGrab
             buttonDownload.Enabled = true;
             SaveOutputSetting();
         }
+
         // Save Most Recent Output Path
         private void SaveOutputSetting()
         {
@@ -237,13 +273,10 @@ namespace SoloThreadGrab
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            int countAborted = 0;
             foreach (WebClient client in asyncDownloads)
             {
                 client.CancelAsync();
-                countAborted++;
             }
-            MessageBox.Show("Stopped " + countAborted + " out of " + itemURLs.Count + ".");
         }
 
         // Switch Image Preview Event
