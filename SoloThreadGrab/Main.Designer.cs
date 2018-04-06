@@ -55,6 +55,7 @@
             this.textOutputPath = new System.Windows.Forms.TextBox();
             this.progressBarDownload = new System.Windows.Forms.ProgressBar();
             this.buttonDownload = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.previewBox)).BeginInit();
             this.groupPreview.SuspendLayout();
             this.groupDownload.SuspendLayout();
@@ -182,7 +183,6 @@
             // radioDownPar
             // 
             this.radioDownPar.AutoSize = true;
-            this.radioDownPar.Enabled = false;
             this.radioDownPar.Location = new System.Drawing.Point(155, 154);
             this.radioDownPar.Name = "radioDownPar";
             this.radioDownPar.Size = new System.Drawing.Size(126, 19);
@@ -330,17 +330,28 @@
             this.buttonDownload.Enabled = false;
             this.buttonDownload.Location = new System.Drawing.Point(18, 517);
             this.buttonDownload.Name = "buttonDownload";
-            this.buttonDownload.Size = new System.Drawing.Size(175, 52);
+            this.buttonDownload.Size = new System.Drawing.Size(103, 52);
             this.buttonDownload.TabIndex = 15;
             this.buttonDownload.Text = "Download";
             this.buttonDownload.UseVisualStyleBackColor = true;
             this.buttonDownload.Click += new System.EventHandler(this.buttonDownload_Click);
+            // 
+            // buttonCancel
+            // 
+            this.buttonCancel.Location = new System.Drawing.Point(127, 517);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(66, 52);
+            this.buttonCancel.TabIndex = 17;
+            this.buttonCancel.Text = "Cancel";
+            this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(563, 596);
+            this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonDownload);
             this.Controls.Add(this.progressBarDownload);
             this.Controls.Add(this.groupDownload);
@@ -353,7 +364,7 @@
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Main";
-            this.Text = "STGrab 1.0";
+            this.Text = "STGrab 1.1";
             this.Load += new System.EventHandler(this.Main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.previewBox)).EndInit();
             this.groupPreview.ResumeLayout(false);
@@ -395,6 +406,7 @@
         private System.Windows.Forms.CheckBox checkBoxCombine;
         private System.Windows.Forms.RadioButton radioDownPar;
         private System.Windows.Forms.RadioButton radioDownSeq;
+        private System.Windows.Forms.Button buttonCancel;
     }
 }
 
