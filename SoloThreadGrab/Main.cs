@@ -157,11 +157,13 @@ namespace SoloThreadGrab
                         catch
                         {
                             countFailedDownloaded++;
+                            progressBarDownload.PerformStep();
                         }
                     }
                     else
                     {
                         countAlreadyDownloaded++;
+                        progressBarDownload.PerformStep();
                     }
                     asyncDownloads.Add(downloader);
                 }
