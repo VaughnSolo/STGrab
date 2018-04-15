@@ -53,6 +53,7 @@ namespace SoloThreadGrab
                 checkBoxFiles.Items.Add(pic, true);
             }
             thumbnailURLs = thread.GetThumbList();
+            MessageBox.Show(thumbnailURLs.Count + "");
             FileUtilities.ThumbFolderSetup(thumbnailPath);
             SetFoundLabel(itemURLs.Count);
             SetCheckedLabel(itemURLs.Count);
@@ -221,6 +222,7 @@ namespace SoloThreadGrab
             {
                 folder += "\\" + textThreadFolder.Text;
             }
+            folder = folder.Replace('/', '#');
             return folder;
         }
         // Create Output Folder or Alert User of Issues

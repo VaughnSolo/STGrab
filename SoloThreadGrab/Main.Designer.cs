@@ -364,7 +364,7 @@
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Main";
-            this.Text = "STGrab 1.1";
+            this.Text = "STGrab 1.2";
             this.Load += new System.EventHandler(this.Main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.previewBox)).EndInit();
             this.groupPreview.ResumeLayout(false);
