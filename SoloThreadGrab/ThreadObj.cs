@@ -51,7 +51,7 @@ namespace SoloThreadGrab
             Regex fileRegex;
             if (url.Contains("8ch"))
             {
-                fileRegex = new Regex(@"(?:a title=.*? href)=\""https:\/\/(.{1,111}?\.(?:gif?|webm?|jpeg?|png?|mp4?|jpg))");
+                fileRegex = new Regex(@"<a href=""https:\/\/(.{1,111}?\.(?:gif?|webm?|jpeg?|png?|mp4?|jpg))"" target=""_blank"">");
             }
             else
             {
@@ -72,7 +72,7 @@ namespace SoloThreadGrab
             Regex fileRegex;
             if (url.Contains("8ch"))
             {
-                fileRegex = new Regex(@"(?:a title=.*? href)=\""https:\/\/(.{1,111}?\.(?:gif?|webm?|jpeg?|png?|mp4?|jpg))");
+                fileRegex = new Regex(@"<a href=""https:\/\/(.{1,111}?\.(?:gif?|webm?|jpeg?|png?|mp4?|jpg))"" target=""_blank"">");
             }
             else
             {
@@ -88,7 +88,7 @@ namespace SoloThreadGrab
 
             if (url.Contains("8ch"))
             {
-                fileRegex = new Regex(@"<img class=""post-image"" src=""https:\/\/(.{1,100}\.(?:jpg?|png))");
+                fileRegex = new Regex(@"<img class=""post-image"" src=""(https:\/\/media.8ch.net\/file_store\/thumb\/.{1,100}\.(?:jpeg?|gif?|jpg?|png))");
             }
             else
             {
