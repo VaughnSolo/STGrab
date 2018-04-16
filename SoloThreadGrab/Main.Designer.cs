@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.buttonGrab = new System.Windows.Forms.Button();
             this.textNewURL = new System.Windows.Forms.TextBox();
             this.previewBox = new System.Windows.Forms.PictureBox();
             this.checkBoxFiles = new System.Windows.Forms.CheckedListBox();
             this.groupPreview = new System.Windows.Forms.GroupBox();
+            this.textLoadedURL = new System.Windows.Forms.TextBox();
             this.labelCheckedCount = new System.Windows.Forms.Label();
             this.labelFileCount = new System.Windows.Forms.Label();
             this.textThreadTitle = new System.Windows.Forms.TextBox();
@@ -58,13 +60,20 @@
             this.radioS = new System.Windows.Forms.RadioButton();
             this.radioSP = new System.Windows.Forms.RadioButton();
             this.radioM = new System.Windows.Forms.RadioButton();
-            this.listBoxThreads = new System.Windows.Forms.ListBox();
+            this.listMultiLinks = new System.Windows.Forms.ListBox();
             this.progressThreads = new System.Windows.Forms.ProgressBar();
+            this.groupMultiThread = new System.Windows.Forms.GroupBox();
+            this.buttonClear = new System.Windows.Forms.Button();
+            this.buttonRemove = new System.Windows.Forms.Button();
+            this.listMultiStatus = new System.Windows.Forms.ListBox();
+            this.listMultiNames = new System.Windows.Forms.ListBox();
+            this.hoverTip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.previewBox)).BeginInit();
             this.groupPreview.SuspendLayout();
             this.groupDownload.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupMode.SuspendLayout();
+            this.groupMultiThread.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonGrab
@@ -100,27 +109,37 @@
             // 
             this.checkBoxFiles.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBoxFiles.FormattingEnabled = true;
-            this.checkBoxFiles.Location = new System.Drawing.Point(6, 20);
+            this.checkBoxFiles.Location = new System.Drawing.Point(6, 50);
             this.checkBoxFiles.Name = "checkBoxFiles";
-            this.checkBoxFiles.Size = new System.Drawing.Size(295, 244);
+            this.checkBoxFiles.Size = new System.Drawing.Size(295, 214);
             this.checkBoxFiles.TabIndex = 3;
             this.checkBoxFiles.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkBoxFiles_ItemCheck);
             this.checkBoxFiles.SelectedIndexChanged += new System.EventHandler(this.checkBoxFiles_SelectedIndexChanged);
             // 
             // groupPreview
             // 
+            this.groupPreview.Controls.Add(this.textLoadedURL);
             this.groupPreview.Controls.Add(this.labelCheckedCount);
             this.groupPreview.Controls.Add(this.labelFileCount);
             this.groupPreview.Controls.Add(this.previewBox);
             this.groupPreview.Controls.Add(this.checkBoxFiles);
             this.groupPreview.Controls.Add(this.textThreadTitle);
             this.groupPreview.Controls.Add(this.labelThreadTitle);
-            this.groupPreview.Location = new System.Drawing.Point(18, 263);
+            this.groupPreview.Location = new System.Drawing.Point(18, 259);
             this.groupPreview.Name = "groupPreview";
-            this.groupPreview.Size = new System.Drawing.Size(531, 296);
+            this.groupPreview.Size = new System.Drawing.Size(531, 305);
             this.groupPreview.TabIndex = 5;
             this.groupPreview.TabStop = false;
             this.groupPreview.Text = "Thread Item Preview";
+            // 
+            // textLoadedURL
+            // 
+            this.textLoadedURL.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.textLoadedURL.Location = new System.Drawing.Point(6, 20);
+            this.textLoadedURL.Name = "textLoadedURL";
+            this.textLoadedURL.ReadOnly = true;
+            this.textLoadedURL.Size = new System.Drawing.Size(295, 21);
+            this.textLoadedURL.TabIndex = 9;
             // 
             // labelCheckedCount
             // 
@@ -351,7 +370,7 @@
             this.radioS.TabIndex = 2;
             this.radioS.Text = "Single Thread w/o Preview";
             this.radioS.UseVisualStyleBackColor = true;
-            this.radioS.CheckedChanged += new System.EventHandler(this.Download_Mode_Switch);
+            this.radioS.CheckedChanged += new System.EventHandler(this.DownloadModeSwitch);
             // 
             // radioSP
             // 
@@ -364,7 +383,7 @@
             this.radioSP.TabStop = true;
             this.radioSP.Text = "Single Thread w/ Preview";
             this.radioSP.UseVisualStyleBackColor = true;
-            this.radioSP.CheckedChanged += new System.EventHandler(this.Download_Mode_Switch);
+            this.radioSP.CheckedChanged += new System.EventHandler(this.DownloadModeSwitch);
             // 
             // radioM
             // 
@@ -375,17 +394,16 @@
             this.radioM.TabIndex = 0;
             this.radioM.Text = "Multiple Thread";
             this.radioM.UseVisualStyleBackColor = true;
-            this.radioM.CheckedChanged += new System.EventHandler(this.Download_Mode_Switch);
+            this.radioM.CheckedChanged += new System.EventHandler(this.DownloadModeSwitch);
             // 
-            // listBoxThreads
+            // listMultiLinks
             // 
-            this.listBoxThreads.FormattingEnabled = true;
-            this.listBoxThreads.ItemHeight = 15;
-            this.listBoxThreads.Location = new System.Drawing.Point(18, 263);
-            this.listBoxThreads.Name = "listBoxThreads";
-            this.listBoxThreads.Size = new System.Drawing.Size(531, 289);
-            this.listBoxThreads.TabIndex = 19;
-            this.listBoxThreads.Visible = false;
+            this.listMultiLinks.FormattingEnabled = true;
+            this.listMultiLinks.ItemHeight = 15;
+            this.listMultiLinks.Location = new System.Drawing.Point(6, 20);
+            this.listMultiLinks.Name = "listMultiLinks";
+            this.listMultiLinks.Size = new System.Drawing.Size(224, 244);
+            this.listMultiLinks.TabIndex = 19;
             // 
             // progressThreads
             // 
@@ -396,19 +414,75 @@
             this.progressThreads.TabIndex = 20;
             this.progressThreads.Visible = false;
             // 
+            // groupMultiThread
+            // 
+            this.groupMultiThread.Controls.Add(this.buttonClear);
+            this.groupMultiThread.Controls.Add(this.buttonRemove);
+            this.groupMultiThread.Controls.Add(this.listMultiStatus);
+            this.groupMultiThread.Controls.Add(this.listMultiNames);
+            this.groupMultiThread.Controls.Add(this.listMultiLinks);
+            this.groupMultiThread.Location = new System.Drawing.Point(18, 259);
+            this.groupMultiThread.Name = "groupMultiThread";
+            this.groupMultiThread.Size = new System.Drawing.Size(531, 305);
+            this.groupMultiThread.TabIndex = 21;
+            this.groupMultiThread.TabStop = false;
+            this.groupMultiThread.Text = "Thread List";
+            this.groupMultiThread.Visible = false;
+            // 
+            // buttonClear
+            // 
+            this.buttonClear.Location = new System.Drawing.Point(87, 270);
+            this.buttonClear.Name = "buttonClear";
+            this.buttonClear.Size = new System.Drawing.Size(75, 29);
+            this.buttonClear.TabIndex = 23;
+            this.buttonClear.Text = "Clear";
+            this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
+            // 
+            // buttonRemove
+            // 
+            this.buttonRemove.Location = new System.Drawing.Point(6, 270);
+            this.buttonRemove.Name = "buttonRemove";
+            this.buttonRemove.Size = new System.Drawing.Size(75, 29);
+            this.buttonRemove.TabIndex = 22;
+            this.buttonRemove.Text = "Remove";
+            this.buttonRemove.UseVisualStyleBackColor = true;
+            this.buttonRemove.Click += new System.EventHandler(this.buttonRemove_Click);
+            // 
+            // listMultiStatus
+            // 
+            this.listMultiStatus.FormattingEnabled = true;
+            this.listMultiStatus.ItemHeight = 15;
+            this.listMultiStatus.Location = new System.Drawing.Point(404, 20);
+            this.listMultiStatus.Name = "listMultiStatus";
+            this.listMultiStatus.SelectionMode = System.Windows.Forms.SelectionMode.None;
+            this.listMultiStatus.Size = new System.Drawing.Size(121, 244);
+            this.listMultiStatus.TabIndex = 21;
+            this.hoverTip.SetToolTip(this.listMultiStatus, "DLed = Downloaded | Fail = Failed to Download | Prev = Previously Downloaded");
+            // 
+            // listMultiNames
+            // 
+            this.listMultiNames.FormattingEnabled = true;
+            this.listMultiNames.ItemHeight = 15;
+            this.listMultiNames.Location = new System.Drawing.Point(236, 20);
+            this.listMultiNames.Name = "listMultiNames";
+            this.listMultiNames.SelectionMode = System.Windows.Forms.SelectionMode.None;
+            this.listMultiNames.Size = new System.Drawing.Size(162, 244);
+            this.listMultiNames.TabIndex = 20;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(568, 651);
+            this.Controls.Add(this.groupMultiThread);
             this.Controls.Add(this.progressThreads);
             this.Controls.Add(this.groupMode);
             this.Controls.Add(this.buttonDownload);
             this.Controls.Add(this.progressBarDownload);
+            this.Controls.Add(this.groupPreview);
             this.Controls.Add(this.groupDownload);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.groupPreview);
-            this.Controls.Add(this.listBoxThreads);
             this.Controls.Add(this.textNewURL);
             this.Controls.Add(this.buttonGrab);
             this.Controls.Add(this.buttonCancel);
@@ -426,6 +500,7 @@
             this.panel1.PerformLayout();
             this.groupMode.ResumeLayout(false);
             this.groupMode.PerformLayout();
+            this.groupMultiThread.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -462,8 +537,15 @@
         private System.Windows.Forms.RadioButton radioS;
         private System.Windows.Forms.RadioButton radioSP;
         private System.Windows.Forms.RadioButton radioM;
-        private System.Windows.Forms.ListBox listBoxThreads;
+        private System.Windows.Forms.ListBox listMultiLinks;
         private System.Windows.Forms.ProgressBar progressThreads;
+        private System.Windows.Forms.TextBox textLoadedURL;
+        private System.Windows.Forms.GroupBox groupMultiThread;
+        private System.Windows.Forms.ListBox listMultiStatus;
+        private System.Windows.Forms.ListBox listMultiNames;
+        private System.Windows.Forms.ToolTip hoverTip;
+        private System.Windows.Forms.Button buttonClear;
+        private System.Windows.Forms.Button buttonRemove;
     }
 }
 

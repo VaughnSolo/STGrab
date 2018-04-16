@@ -34,5 +34,17 @@ namespace SoloThreadGrab.Properties {
                 this["OutputPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Mode {
+            get {
+                return ((int)(this["Mode"]));
+            }
+            set {
+                this["Mode"] = value;
+            }
+        }
     }
 }

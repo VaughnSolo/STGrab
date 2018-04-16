@@ -66,6 +66,20 @@ namespace SoloThreadGrab
             }
             return ret;
         }
+        // Get Count of Items
+        public int GetItemCount()
+        {
+            Regex fileRegex;
+            if (url.Contains("8ch"))
+            {
+                fileRegex = new Regex(@"(?:a title=.*? href)=\""https:\/\/(.{1,111}?\.(?:gif?|webm?|jpeg?|png?|mp4?|jpg))");
+            }
+            else
+            {
+                fileRegex = new Regex(@"(?:a title=.*? href|a href)=\""\/\/(.{1,50}?\.(?:gif?|webm?|jpg?|png))");
+            }
+            return fileRegex.Matches(fetchedText).Count;
+        }
         // Get List of All Thumbnail URLs
         public List<string> GetThumbList()
         {
@@ -136,6 +150,10 @@ namespace SoloThreadGrab
         public void DownloadThumb(string url,string path)
         {
             client.DownloadFile("http://" + url, path);
+        }
+        public string GetURL()
+        {
+            return url;
         }
     }
 }
