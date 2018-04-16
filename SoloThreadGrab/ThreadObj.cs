@@ -147,9 +147,17 @@ namespace SoloThreadGrab
             return ret;
         }
         // Get Single Thumbnail
-        public void DownloadThumb(string url,string path)
+        public bool DownloadThumb(string url,string path)
         {
-            client.DownloadFile("http://" + url, path);
+            try
+            {
+                client.DownloadFile("http://" + url, path);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
         public string GetURL()
         {

@@ -419,6 +419,17 @@ namespace SoloThreadGrab
         private string GenerateOutputPath()
         {
             string folder = textOutputPath.Text;
+            if (radioSite.Checked)
+            {
+                if (thread.GetURL().Contains("8ch"))
+                {
+                    folder += "\\8ch\\" + thread.GetBoard() + "\\" + thread.GetThreadname();
+                }
+                else
+                {
+                    folder += "\\4ch\\" + thread.GetBoard() + "\\" + thread.GetThreadname();
+                }
+            }
             if (radioFullPath.Checked)
             {
                 folder += "\\" + thread.GetBoard() + "\\" + thread.GetThreadname();
@@ -513,8 +524,8 @@ namespace SoloThreadGrab
             groupMultiThread.Visible = false;
             progressThreads.Visible = false;
             radioDownSeq.Enabled = true;
-            this.Height = 690;
-            progressBarDownload.Top = 606;
+            this.Height = 705;
+            progressBarDownload.Top = 617;
             mode = 0;
         }
         private void ModeSwitchS()
@@ -526,8 +537,8 @@ namespace SoloThreadGrab
             groupMultiThread.Visible = false;
             progressThreads.Visible = false;
             radioDownSeq.Enabled = true;
-            this.Height = 325;
-            progressBarDownload.Top = 263;
+            this.Height = 336;
+            progressBarDownload.Top = 274;
             mode = 1;
         }
         private void ModeSwitchM()
@@ -541,8 +552,8 @@ namespace SoloThreadGrab
             progressThreads.Visible = true;
             radioDownSeq.Enabled = false;
             radioDownPar.Checked = true;
-            this.Height = 690;
-            progressBarDownload.Top = 606;
+            this.Height = 705;
+            progressBarDownload.Top = 618;
             mode = 2;
         }
         // Toggle Control Lock
@@ -604,9 +615,30 @@ namespace SoloThreadGrab
             string thumbFilename = thumbnailPath + "\\" + index + ".jpg";
             if (!FileUtilities.IsSaved(thumbFilename))
             {
-                thread.DownloadThumb(thumbnailURLs[index], thumbFilename);
+                if (thread.GetURL().Contains("8ch"))
+                {
+                    string thumbURL = itemURLs[index].Substring(0, 25) + "thumb/" + itemURLs[index].Substring(25);
+                    if (thread.DownloadThumb(thumbURL, thumbFilename))
+                    {
+                        previewBox.Image = FileUtilities.LoadImage(thumbFilename);
+                        return;
+                    }
+                }
+                else
+                {
+                    if (thread.DownloadThumb(thumbnailURLs[index], thumbFilename))
+                    {
+                        previewBox.Image = FileUtilities.LoadImage(thumbFilename);
+                        return;
+                    }
+                }
             }
-            previewBox.Image = FileUtilities.LoadImage(thumbFilename);
+            else
+            {
+                previewBox.Image = FileUtilities.LoadImage(thumbFilename);
+                return;
+            }
+            previewBox.Image = null;
         }
     }
 }

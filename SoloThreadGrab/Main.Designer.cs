@@ -68,6 +68,7 @@
             this.listMultiStatus = new System.Windows.Forms.ListBox();
             this.listMultiNames = new System.Windows.Forms.ListBox();
             this.hoverTip = new System.Windows.Forms.ToolTip(this.components);
+            this.radioSite = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.previewBox)).BeginInit();
             this.groupPreview.SuspendLayout();
             this.groupDownload.SuspendLayout();
@@ -79,9 +80,9 @@
             // buttonGrab
             // 
             this.buttonGrab.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.buttonGrab.Location = new System.Drawing.Point(458, 236);
+            this.buttonGrab.Location = new System.Drawing.Point(449, 246);
             this.buttonGrab.Name = "buttonGrab";
-            this.buttonGrab.Size = new System.Drawing.Size(91, 21);
+            this.buttonGrab.Size = new System.Drawing.Size(100, 21);
             this.buttonGrab.TabIndex = 0;
             this.buttonGrab.Text = "Load";
             this.buttonGrab.UseVisualStyleBackColor = true;
@@ -90,9 +91,9 @@
             // textNewURL
             // 
             this.textNewURL.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.textNewURL.Location = new System.Drawing.Point(107, 236);
+            this.textNewURL.Location = new System.Drawing.Point(105, 245);
             this.textNewURL.Name = "textNewURL";
-            this.textNewURL.Size = new System.Drawing.Size(345, 21);
+            this.textNewURL.Size = new System.Drawing.Size(339, 21);
             this.textNewURL.TabIndex = 1;
             // 
             // previewBox
@@ -109,7 +110,7 @@
             // 
             this.checkBoxFiles.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBoxFiles.FormattingEnabled = true;
-            this.checkBoxFiles.Location = new System.Drawing.Point(6, 50);
+            this.checkBoxFiles.Location = new System.Drawing.Point(6, 20);
             this.checkBoxFiles.Name = "checkBoxFiles";
             this.checkBoxFiles.Size = new System.Drawing.Size(295, 214);
             this.checkBoxFiles.TabIndex = 3;
@@ -125,7 +126,7 @@
             this.groupPreview.Controls.Add(this.checkBoxFiles);
             this.groupPreview.Controls.Add(this.textThreadTitle);
             this.groupPreview.Controls.Add(this.labelThreadTitle);
-            this.groupPreview.Location = new System.Drawing.Point(18, 259);
+            this.groupPreview.Location = new System.Drawing.Point(18, 270);
             this.groupPreview.Name = "groupPreview";
             this.groupPreview.Size = new System.Drawing.Size(531, 305);
             this.groupPreview.TabIndex = 5;
@@ -135,7 +136,7 @@
             // textLoadedURL
             // 
             this.textLoadedURL.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.textLoadedURL.Location = new System.Drawing.Point(6, 20);
+            this.textLoadedURL.Location = new System.Drawing.Point(6, 243);
             this.textLoadedURL.Name = "textLoadedURL";
             this.textLoadedURL.ReadOnly = true;
             this.textLoadedURL.Size = new System.Drawing.Size(295, 21);
@@ -179,7 +180,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(24, 238);
+            this.label1.Location = new System.Drawing.Point(22, 248);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(77, 15);
             this.label1.TabIndex = 6;
@@ -196,7 +197,7 @@
             this.groupDownload.Controls.Add(this.textOutputPath);
             this.groupDownload.Location = new System.Drawing.Point(18, 65);
             this.groupDownload.Name = "groupDownload";
-            this.groupDownload.Size = new System.Drawing.Size(531, 156);
+            this.groupDownload.Size = new System.Drawing.Size(531, 178);
             this.groupDownload.TabIndex = 9;
             this.groupDownload.TabStop = false;
             this.groupDownload.Text = "Download Options";
@@ -205,7 +206,7 @@
             // 
             this.radioDownPar.AutoSize = true;
             this.radioDownPar.Checked = true;
-            this.radioDownPar.Location = new System.Drawing.Point(155, 130);
+            this.radioDownPar.Location = new System.Drawing.Point(155, 155);
             this.radioDownPar.Name = "radioDownPar";
             this.radioDownPar.Size = new System.Drawing.Size(126, 19);
             this.radioDownPar.TabIndex = 17;
@@ -216,7 +217,7 @@
             // radioDownSeq
             // 
             this.radioDownSeq.AutoSize = true;
-            this.radioDownSeq.Location = new System.Drawing.Point(6, 130);
+            this.radioDownSeq.Location = new System.Drawing.Point(6, 155);
             this.radioDownSeq.Name = "radioDownSeq";
             this.radioDownSeq.Size = new System.Drawing.Size(143, 19);
             this.radioDownSeq.TabIndex = 16;
@@ -228,7 +229,7 @@
             this.checkBoxCombine.AutoSize = true;
             this.checkBoxCombine.Checked = true;
             this.checkBoxCombine.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxCombine.Location = new System.Drawing.Point(325, 131);
+            this.checkBoxCombine.Location = new System.Drawing.Point(325, 156);
             this.checkBoxCombine.Name = "checkBoxCombine";
             this.checkBoxCombine.Size = new System.Drawing.Size(200, 19);
             this.checkBoxCombine.TabIndex = 15;
@@ -250,19 +251,20 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.radioSite);
             this.panel1.Controls.Add(this.radioNoFolders);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.radioNoBoard);
             this.panel1.Controls.Add(this.radioFullPath);
             this.panel1.Location = new System.Drawing.Point(6, 47);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(519, 78);
+            this.panel1.Size = new System.Drawing.Size(519, 102);
             this.panel1.TabIndex = 12;
             // 
             // radioNoFolders
             // 
             this.radioNoFolders.AutoSize = true;
-            this.radioNoFolders.Location = new System.Drawing.Point(102, 53);
+            this.radioNoFolders.Location = new System.Drawing.Point(102, 78);
             this.radioNoFolders.Name = "radioNoFolders";
             this.radioNoFolders.Size = new System.Drawing.Size(143, 19);
             this.radioNoFolders.TabIndex = 14;
@@ -273,7 +275,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(-1, 3);
+            this.label3.Location = new System.Drawing.Point(-1, 5);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(97, 15);
             this.label3.TabIndex = 13;
@@ -282,7 +284,7 @@
             // radioNoBoard
             // 
             this.radioNoBoard.AutoSize = true;
-            this.radioNoBoard.Location = new System.Drawing.Point(102, 28);
+            this.radioNoBoard.Location = new System.Drawing.Point(102, 53);
             this.radioNoBoard.Name = "radioNoBoard";
             this.radioNoBoard.Size = new System.Drawing.Size(222, 19);
             this.radioNoBoard.TabIndex = 12;
@@ -293,12 +295,10 @@
             // radioFullPath
             // 
             this.radioFullPath.AutoSize = true;
-            this.radioFullPath.Checked = true;
-            this.radioFullPath.Location = new System.Drawing.Point(102, 3);
+            this.radioFullPath.Location = new System.Drawing.Point(102, 28);
             this.radioFullPath.Name = "radioFullPath";
             this.radioFullPath.Size = new System.Drawing.Size(295, 19);
             this.radioFullPath.TabIndex = 11;
-            this.radioFullPath.TabStop = true;
             this.radioFullPath.Text = "Output Path\\Board Name\\Thread Name\\Files.type";
             this.radioFullPath.UseVisualStyleBackColor = true;
             this.radioFullPath.CheckedChanged += new System.EventHandler(this.FolderStruct_Changed);
@@ -323,7 +323,7 @@
             // 
             // progressBarDownload
             // 
-            this.progressBarDownload.Location = new System.Drawing.Point(18, 606);
+            this.progressBarDownload.Location = new System.Drawing.Point(18, 617);
             this.progressBarDownload.Name = "progressBarDownload";
             this.progressBarDownload.Size = new System.Drawing.Size(531, 16);
             this.progressBarDownload.Step = 1;
@@ -331,7 +331,7 @@
             // 
             // buttonDownload
             // 
-            this.buttonDownload.Location = new System.Drawing.Point(18, 570);
+            this.buttonDownload.Location = new System.Drawing.Point(18, 581);
             this.buttonDownload.Name = "buttonDownload";
             this.buttonDownload.Size = new System.Drawing.Size(531, 30);
             this.buttonDownload.TabIndex = 15;
@@ -341,7 +341,7 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(18, 570);
+            this.buttonCancel.Location = new System.Drawing.Point(18, 581);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(531, 30);
             this.buttonCancel.TabIndex = 17;
@@ -364,7 +364,7 @@
             // radioS
             // 
             this.radioS.AutoSize = true;
-            this.radioS.Location = new System.Drawing.Point(211, 20);
+            this.radioS.Location = new System.Drawing.Point(192, 20);
             this.radioS.Name = "radioS";
             this.radioS.Size = new System.Drawing.Size(170, 19);
             this.radioS.TabIndex = 2;
@@ -376,7 +376,7 @@
             // 
             this.radioSP.AutoSize = true;
             this.radioSP.Checked = true;
-            this.radioSP.Location = new System.Drawing.Point(12, 20);
+            this.radioSP.Location = new System.Drawing.Point(6, 20);
             this.radioSP.Name = "radioSP";
             this.radioSP.Size = new System.Drawing.Size(163, 19);
             this.radioSP.TabIndex = 1;
@@ -407,7 +407,7 @@
             // 
             // progressThreads
             // 
-            this.progressThreads.Location = new System.Drawing.Point(18, 628);
+            this.progressThreads.Location = new System.Drawing.Point(18, 639);
             this.progressThreads.Name = "progressThreads";
             this.progressThreads.Size = new System.Drawing.Size(531, 16);
             this.progressThreads.Step = 1;
@@ -421,7 +421,7 @@
             this.groupMultiThread.Controls.Add(this.listMultiStatus);
             this.groupMultiThread.Controls.Add(this.listMultiNames);
             this.groupMultiThread.Controls.Add(this.listMultiLinks);
-            this.groupMultiThread.Location = new System.Drawing.Point(18, 259);
+            this.groupMultiThread.Location = new System.Drawing.Point(18, 270);
             this.groupMultiThread.Name = "groupMultiThread";
             this.groupMultiThread.Size = new System.Drawing.Size(531, 305);
             this.groupMultiThread.TabIndex = 21;
@@ -470,11 +470,23 @@
             this.listMultiNames.Size = new System.Drawing.Size(162, 244);
             this.listMultiNames.TabIndex = 20;
             // 
+            // radioSite
+            // 
+            this.radioSite.AutoSize = true;
+            this.radioSite.Checked = true;
+            this.radioSite.Location = new System.Drawing.Point(102, 3);
+            this.radioSite.Name = "radioSite";
+            this.radioSite.Size = new System.Drawing.Size(319, 19);
+            this.radioSite.TabIndex = 15;
+            this.radioSite.Text = "Output Path\\Site\\Board Name\\Thread Name\\Files.type";
+            this.radioSite.UseVisualStyleBackColor = true;
+            this.radioSite.CheckedChanged += new System.EventHandler(this.FolderStruct_Changed);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(568, 651);
+            this.ClientSize = new System.Drawing.Size(568, 666);
             this.Controls.Add(this.groupMultiThread);
             this.Controls.Add(this.progressThreads);
             this.Controls.Add(this.groupMode);
@@ -546,6 +558,7 @@
         private System.Windows.Forms.ToolTip hoverTip;
         private System.Windows.Forms.Button buttonClear;
         private System.Windows.Forms.Button buttonRemove;
+        private System.Windows.Forms.RadioButton radioSite;
     }
 }
 
