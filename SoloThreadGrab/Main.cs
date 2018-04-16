@@ -17,9 +17,10 @@ namespace SoloThreadGrab
     public partial class Main : Form
     {
 
-        private List<string> itemURLs, thumbnailURLs;
+        private List<string> itemURLs, thumbnailURLs, threadURLs;
         private List<WebClient> asyncDownloads;
-        int countCompleteDownload, countPrevDownload, countFailedDownload, countCancelledDownload;
+        int countCompleteDownload, countPrevDownload, countFailedDownload, countCancelledDownload, mode;
+        bool readyNextThread, controlLock;
         ThreadObj thread;
         private string thumbnailPath = "thumbnails";
 
@@ -31,14 +32,61 @@ namespace SoloThreadGrab
         private void Main_Load(object sender, EventArgs e)
         {
             textOutputPath.Text = Properties.Settings.Default.OutputPath;
+            controlLock = false;
+            mode = 0;
         }
         // Inintiate New Thread Grab
         private void buttonGrab_Click(object sender, EventArgs e)
+        {
+            if (textOutputPath.Text == "")
+            {
+                MessageBox.Show("Please select output path before continuing.");
+                return;
+            }
+            if (textNewURL.Text == "")
+            {
+                return;
+            }
+            if (mode == 0)
+            {
+                Load_Thread_Preview();
+            }
+            else if (mode == 1)
+            {
+                ToggleControlLock();
+                Load_Thread(textNewURL.Text);
+                Download_Loaded_Thread();
+            }
+            else if (mode == 2)
+            {
+                if (!threadURLs.Contains(textNewURL.Text))
+                {
+                    listBoxThreads.Items.Add(textNewURL.Text);
+                    threadURLs.Add(textNewURL.Text);
+                    textNewURL.Text = "";
+                }
+            }
+        }
+        // Clear Old Info
+        private void ClearUI()
         {
             if (checkBoxFiles.Items.Count > 0)
             {
                 checkBoxFiles.Items.Clear();
             }
+            if (listBoxThreads.Items.Count > 0)
+            {
+                listBoxThreads.Items.Clear();
+            }
+            textThreadTitle.Text = "";
+            previewBox.Image = null;
+            SetCheckedLabel(0);
+            SetFoundLabel(0);
+        }
+        // Single with Preview Action
+        private void Load_Thread_Preview()
+        {
+            ClearUI();
             thread = new ThreadObj(textNewURL.Text);
             if (!thread.PageFound())
             {
@@ -46,27 +94,33 @@ namespace SoloThreadGrab
                 return;
             }
             textThreadTitle.Text = thread.GetThreadname();
-            textThreadFolder.Text = textThreadTitle.Text;
             itemURLs = thread.GetItemList();
             foreach (string pic in itemURLs)
             {
                 checkBoxFiles.Items.Add(pic, true);
             }
             thumbnailURLs = thread.GetThumbList();
-            MessageBox.Show(thumbnailURLs.Count + "");
             FileUtilities.ThumbFolderSetup(thumbnailPath);
             SetFoundLabel(itemURLs.Count);
             SetCheckedLabel(itemURLs.Count);
-            groupPreview.Enabled = true;
-            groupDownload.Enabled = true;
-            if (textOutputPath.Text != "")
-            {
-                buttonDownload.Enabled = true;
-            }
             if (checkBoxFiles.Items.Count > 0)
             {
                 checkBoxFiles.SelectedIndex = 0;
             }
+        }
+        private bool Load_Thread(string url)
+        {
+            thread = new ThreadObj(url);
+            if (!thread.PageFound())
+            {
+                return false;
+            }
+            if (mode == 0)
+            {
+                textThreadTitle.Text = thread.GetThreadname();
+            }
+            itemURLs = thread.GetItemList();
+            return true;
         }
         // Update Found
         private void SetFoundLabel(int count)
@@ -93,6 +147,30 @@ namespace SoloThreadGrab
         // Download Checked Files to Selected Path
         private void buttonDownload_Click(object sender, EventArgs e)
         {
+            if (textOutputPath.Text == "")
+            {
+                MessageBox.Show("Please select output path before continuing.");
+                return;
+            }
+            if (mode == 0)
+            {
+                if (thread != null)
+                {
+                    ToggleControlLock();
+                    Download_Loaded_Thread();
+                }
+            }
+            else if (mode == 2)
+            {
+                ToggleControlLock();
+                progressThreads.Maximum = threadURLs.Count;
+                progressThreads.Value = 0;
+                Thread downloadWorker = new Thread(() => DownloadMultipleThreads());
+                downloadWorker.Start();
+            }
+        }
+        private void Download_Loaded_Thread()
+        {
             countPrevDownload = 0;
             countFailedDownload = 0;
             countCompleteDownload = 0;
@@ -102,10 +180,43 @@ namespace SoloThreadGrab
             {
                 return;
             }
-            progressBarDownload.Maximum = itemURLs.Count;
-            progressBarDownload.Value = 0;
-            if (radioDownSeq.Checked)
+            if (radioM.Checked)
             {
+                Invoke(new Action(() => progressBarDownload.Maximum = itemURLs.Count));
+                Invoke(new Action(() => progressBarDownload.Value = 0)); 
+                asyncDownloads = new List<WebClient>();
+                foreach (string file in itemURLs)
+                {
+                    WebClient downloader = new WebClient();
+                    string fileName = thread.FilenameFromURL(file);
+                    string fullPath = path + "\\" + fileName;
+                    Uri fullURI = new Uri("http://" + file);
+                    if (!FileUtilities.IsSaved(fullPath))
+                    {
+                        try
+                        {
+                            downloader.DownloadFileAsync(fullURI, fullPath);
+                            downloader.DownloadFileCompleted += AsyncDownloadCompleted;
+                        }
+                        catch
+                        {
+                            countFailedDownload++;
+                            Invoke(new Action(() => progressBarDownload.PerformStep())); 
+                        }
+                    }
+                    else
+                    {
+                        countPrevDownload++;
+                        Invoke(new Action(() => progressBarDownload.PerformStep())); 
+                    }
+                    asyncDownloads.Add(downloader);
+                }
+                CheckAndDisplayDownloadComplete();
+            }
+            else if (radioDownSeq.Checked)
+            {
+                progressBarDownload.Maximum = itemURLs.Count;
+                progressBarDownload.Value = 0;
                 buttonDownload.Enabled = false;
                 WebClient downloader = new WebClient();
                 foreach (string file in itemURLs)
@@ -135,6 +246,8 @@ namespace SoloThreadGrab
             }
             else if (radioDownPar.Checked)
             {
+                progressBarDownload.Maximum = itemURLs.Count;
+                progressBarDownload.Value = 0;
                 asyncDownloads = new List<WebClient>();
                 buttonDownload.Visible = false;
                 foreach (string file in itemURLs)
@@ -169,7 +282,7 @@ namespace SoloThreadGrab
         // Handler for completed download event, increment tracker and check if complete.
         private void AsyncDownloadCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            progressBarDownload.PerformStep();
+            Invoke(new Action(() => progressBarDownload.PerformStep())); 
             if (!e.Cancelled)
             {
                 Interlocked.Increment(ref countCompleteDownload);
@@ -196,7 +309,15 @@ namespace SoloThreadGrab
             {
                 resultMessage += " [" + countCancelledDownload + " cancelled]";
             }
-            MessageBox.Show(resultMessage);
+            if (mode == 2)
+            {
+                Thread displayThread = new Thread(() => MessageBox.Show(resultMessage));
+                displayThread.Start();
+            }
+            else
+            {
+                MessageBox.Show(resultMessage);
+            }
         }
         // Check if all async downloads are completed/failed.
         private void CheckAndDisplayDownloadComplete()
@@ -204,11 +325,38 @@ namespace SoloThreadGrab
             int countTotalComplete = countCompleteDownload + countFailedDownload + countPrevDownload + countCancelledDownload;
             if (countTotalComplete == itemURLs.Count)
             {
-                buttonDownload.Enabled = true;
-                buttonDownload.Visible = true;
-                progressBarDownload.Value = progressBarDownload.Maximum;
+                if (mode != 2)
+                {
+                    progressBarDownload.Value = progressBarDownload.Maximum;
+                    if (mode == 0)
+                    {
+                        buttonDownload.Visible = true;
+                    }
+                    ToggleControlLock();
+                }
+                else
+                {
+                    readyNextThread = true;
+                }
                 DisplayResults();
             }
+        }
+        // Download Thread THREADED
+        private void DownloadMultipleThreads()
+        {
+            foreach (string currentThread in threadURLs)
+            {
+                readyNextThread = false;
+                Load_Thread(currentThread);
+                Download_Loaded_Thread();
+                while (!readyNextThread)
+                {
+                    Thread.Sleep(1000);
+                }
+                Invoke(new Action(() => progressThreads.PerformStep()));
+            }
+            MessageBox.Show("Completed " + threadURLs.Count + " threads.");
+            Invoke(new Action(() => ToggleControlLock()));
         }
         // Create the Output Path from Options
         private string GenerateOutputPath()
@@ -216,11 +364,11 @@ namespace SoloThreadGrab
             string folder = textOutputPath.Text;
             if (radioFullPath.Checked)
             {
-                folder += "\\" + thread.GetBoard() + "\\" + textThreadFolder.Text;
+                folder += "\\" + thread.GetBoard() + "\\" + thread.GetThreadname();
             }
             else if (radioNoBoard.Checked)
             {
-                folder += "\\" + textThreadFolder.Text;
+                folder += "\\" + thread.GetThreadname();
             }
             folder = folder.Replace('/', '#');
             return folder;
@@ -254,6 +402,70 @@ namespace SoloThreadGrab
             SaveOutputSetting();
         }
 
+        private void Download_Mode_Switch(object sender, EventArgs e)
+        {
+            ClearUI();
+            if (radioSP.Checked)
+            {
+                buttonGrab.Text = "Load";
+                groupPreview.Visible = true;
+                buttonDownload.Visible = true;
+                buttonCancel.Visible = true;
+                listBoxThreads.Visible = false;
+                progressThreads.Visible = false;
+                radioDownSeq.Enabled = true;
+                mode = 0;
+            }
+            else if (radioS.Checked)
+            {
+                buttonGrab.Text = "Download";
+                groupPreview.Visible = false;
+                buttonDownload.Visible = false;
+                buttonCancel.Visible = false;
+                listBoxThreads.Visible = false;
+                progressThreads.Visible = false;
+                radioDownSeq.Enabled = true;
+                mode = 1;
+            }
+            else if (radioM.Checked)
+            {
+                threadURLs = new List<string>();
+                buttonGrab.Text = "Add";
+                groupPreview.Visible = false;
+                buttonDownload.Visible = true;
+                buttonCancel.Visible = true;
+                listBoxThreads.Visible = true;
+                progressThreads.Visible = true;
+                radioDownSeq.Enabled = false;
+                radioDownPar.Checked = true;
+                mode = 2;
+            }
+        }
+        // Toggle Control Lock
+        private void ToggleControlLock()
+        {
+            controlLock = !controlLock;
+            if (!controlLock)
+            {
+                groupDownload.Enabled = true;
+                groupPreview.Enabled = true;
+                groupMode.Enabled = true;
+                buttonGrab.Enabled = true;
+                textNewURL.Enabled = true;
+                buttonDownload.Enabled = true;
+                textThreadTitle.Enabled = true;
+            }
+            else
+            {
+                groupDownload.Enabled = false;
+                groupPreview.Enabled = false;
+                groupMode.Enabled = false;
+                buttonGrab.Enabled = false;
+                textNewURL.Enabled = false;
+                buttonDownload.Enabled = false;
+                textThreadTitle.Enabled = false;
+            }
+        }
         // Save Most Recent Output Path
         private void SaveOutputSetting()
         {

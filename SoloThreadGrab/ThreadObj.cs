@@ -78,7 +78,7 @@ namespace SoloThreadGrab
             }
             else
             {
-                fileRegex = new Regex(@"<img  src=""\/\/(.{1,50}\.jpg)");
+                fileRegex = new Regex(@"<img src=""\/\/(.{1,50}\.jpg)");
             }
             foreach (Match match in fileRegex.Matches(fetchedText))
             {
@@ -86,29 +86,27 @@ namespace SoloThreadGrab
             }
             return ret;
         }
-        // Get Thread Name
+        // Get Thread Name and Return Random in case of BLANK
         public string GetThreadname()
         {
-            string ret;
-            if (url.Contains("8ch"))
+            string ret = "";
+            Regex nameRegex;
+            nameRegex = new Regex(@"<span class=""subject"">(.*?)<\/span>");
+            ret = nameRegex.Match(fetchedText).Groups[1].Value;
+            if (ret == "")
             {
-                Regex nameRegex = new Regex(@"<span class=""subject"">(.*?)<\/span>");
+                nameRegex = new Regex(@"<blockquote class=""postMessage"" id="".*?"">(.*?)<\/blockquote>");
                 ret = nameRegex.Match(fetchedText).Groups[1].Value;
-                return ret;
-            }
-            else
-            {
-                string titleMarker = "<meta name=\"description\" content=\"";
-                string endMarker = " - &quot;/";
-                int titlePos = fetchedText.IndexOf(titleMarker) + titleMarker.Length;
-                int titlePosEnd = fetchedText.IndexOf(endMarker);
-                if (titlePosEnd < 0)
+                if (ret.Length > 20)
                 {
-                    return "";
+                    ret = ret.Substring(0, 20);
                 }
-                ret = fetchedText.Substring(titlePos, titlePosEnd - titlePos);
-                return ret;
             }
+            if (ret == "")
+            {
+                ret = new Random().Next(1, 9999).ToString("0000");
+            }
+            return ret;
         }
         // Get Board Name
         public string GetBoard()
