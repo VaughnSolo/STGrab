@@ -85,6 +85,12 @@ namespace SoloThreadGrab
                         listMultiLinks.Items.Add(textNewURL.Text);
                         listMultiNames.Items.Add(threadCheck.GetThreadname());
                         listMultiStatus.Items.Add(threadCheck.GetItemCount());
+                        int count = threadCheck.GetItemCount();
+                        int thumbCount = threadCheck.GetThumbList().Count;
+                        if (count != thumbCount)
+                        {
+                            MessageBox.Show("Mismatch: " + count + " : " + thumbCount);
+                        }
                         textNewURL.Text = "";
                     }
                     else
@@ -617,11 +623,24 @@ namespace SoloThreadGrab
             {
                 if (thread.GetURL().Contains("8ch"))
                 {
-                    string thumbURL = itemURLs[index].Substring(0, 25) + "thumb/" + itemURLs[index].Substring(25);
-                    if (thread.DownloadThumb(thumbURL, thumbFilename))
+                    int posMarker = itemURLs[index].IndexOf("file_store");
+                    if (posMarker != -1)
                     {
-                        previewBox.Image = FileUtilities.LoadImage(thumbFilename);
-                        return;
+                        string temp = itemURLs[index].Replace("file_store", "file_store/thumb");
+                        if (GetThumb(temp, thumbFilename))
+                        {
+                            previewBox.Image = FileUtilities.LoadImage(thumbFilename);
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        string temp = itemURLs[index].Replace("src", "thumb");                        
+                        if (GetThumb(temp,thumbFilename))
+                        {
+                            previewBox.Image = FileUtilities.LoadImage(thumbFilename);
+                            return;
+                        }
                     }
                 }
                 else
@@ -639,6 +658,107 @@ namespace SoloThreadGrab
                 return;
             }
             previewBox.Image = null;
+        }
+        // Attempt Download with Swapping Filetypes
+        private bool GetThumb(string expectedURL, string outputName)
+        {
+            bool found = false;
+            string startType = expectedURL.Substring(expectedURL.LastIndexOf('.') + 1);
+            if (thread.DownloadThumb(expectedURL, outputName))
+            {
+                found = true;
+            }
+            else if (startType == "jpg")
+            {
+                if (thread.DownloadThumb(expectedURL.Replace("jpg","png"), outputName))
+                {
+                    found = true;
+                }
+                else if (thread.DownloadThumb(expectedURL.Replace("jpg", "gif"), outputName))
+                {
+                    found = true;
+                }
+                else if (thread.DownloadThumb(expectedURL.Replace("jpg", "jpeg"), outputName))
+                {
+                    found = true;
+                }
+            }
+            else if (startType == "png")
+            {
+                if (thread.DownloadThumb(expectedURL.Replace("png", "jpg"), outputName))
+                {
+                    found = true;
+                }
+                else if (thread.DownloadThumb(expectedURL.Replace("png", "gif"), outputName))
+                {
+                    found = true;
+                }
+                else if (thread.DownloadThumb(expectedURL.Replace("png", "jpeg"), outputName))
+                {
+                    found = true;
+                }
+            }
+            else if (startType == "jpeg")
+            {
+                if (thread.DownloadThumb(expectedURL.Replace("jpeg", "jpg"), outputName))
+                {
+                    found = true;
+                }
+                else if (thread.DownloadThumb(expectedURL.Replace("jpeg", "gif"), outputName))
+                {
+                    found = true;
+                }
+                else if (thread.DownloadThumb(expectedURL.Replace("jpeg", "png"), outputName))
+                {
+                    found = true;
+                }
+            }
+            else if (startType == "gif")
+            {
+                if (thread.DownloadThumb(expectedURL.Replace("gif", "jpg"), outputName))
+                {
+                    found = true;
+                }
+                else if (thread.DownloadThumb(expectedURL.Replace("gif", "png"), outputName))
+                {
+                    found = true;
+                }
+                else if (thread.DownloadThumb(expectedURL.Replace("gif", "jpeg"), outputName))
+                {
+                    found = true;
+                }
+            }
+            else if (startType == "mp4")
+            {
+                if (thread.DownloadThumb(expectedURL.Replace("mp4", "jpg"), outputName))
+                {
+                    found = true;
+                }
+                else if (thread.DownloadThumb(expectedURL.Replace("mp4", "png"), outputName))
+                {
+                    found = true;
+                }
+                else if (thread.DownloadThumb(expectedURL.Replace("mp4", "jpeg"), outputName))
+                {
+                    found = true;
+                }
+            }
+            else if (startType == "webm")
+            {
+                if (thread.DownloadThumb(expectedURL.Replace("webm", "jpg"), outputName))
+                {
+                    found = true;
+                }
+                else if (thread.DownloadThumb(expectedURL.Replace("webm", "png"), outputName))
+                {
+                    found = true;
+                }
+                else if (thread.DownloadThumb(expectedURL.Replace("webm", "jpeg"), outputName))
+                {
+                    found = true;
+                }
+            }
+            return found;
         }
     }
 }

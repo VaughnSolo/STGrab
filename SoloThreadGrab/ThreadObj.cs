@@ -64,21 +64,38 @@ namespace SoloThreadGrab
                     ret.Add(match.Groups[1].Value);
                 }
             }
+            // Round 2
+            if (url.Contains("8ch"))
+            {
+                fileRegex = new Regex(@"<a(?: title="".*?(?:webm?|mp4)""|) href=""https:\/\/(.{1,120}\.(?:mp4?|webm))"">");
+                foreach (Match match in fileRegex.Matches(fetchedText))
+                {
+                    if (!ret.Contains(match.Groups[1].Value))
+                    {
+                        ret.Add(match.Groups[1].Value);
+                    }
+                }
+            }
             return ret;
         }
         // Get Count of Items
         public int GetItemCount()
         {
             Regex fileRegex;
+            int count;
             if (url.Contains("8ch"))
             {
                 fileRegex = new Regex(@"<a href=""https:\/\/(.{1,111}?\.(?:gif?|webm?|jpeg?|png?|mp4?|jpg))"" target=""_blank"">");
+                count = fileRegex.Matches(fetchedText).Count;
+                fileRegex = new Regex(@"<a(?: title="".{1,120}(?:webm?|mp4)""|) href=""https:\/\/(.{1,120}\.(?:mp4?|webm))"">");
+                count += fileRegex.Matches(fetchedText).Count;
             }
             else
             {
                 fileRegex = new Regex(@"(?:a title=.*? href|a href)=\""\/\/(.{1,50}?\.(?:gif?|webm?|jpg?|png))");
-            }
-            return fileRegex.Matches(fetchedText).Count;
+                count = fileRegex.Matches(fetchedText).Count;
+            }            
+            return count;
         }
         // Get List of All Thumbnail URLs
         public List<string> GetThumbList()
@@ -88,7 +105,7 @@ namespace SoloThreadGrab
 
             if (url.Contains("8ch"))
             {
-                fileRegex = new Regex(@"<img class=""post-image"" src=""(https:\/\/media.8ch.net\/file_store\/thumb\/.{1,100}\.(?:jpeg?|gif?|jpg?|png))");
+                fileRegex = new Regex(@"<img class=""post-image"" src=""(https:\/\/.*?/thumb\/.{1,120}\.(?:jpeg?|gif?|jpg?|png))");
             }
             else
             {
@@ -105,15 +122,40 @@ namespace SoloThreadGrab
         {
             string ret = "";
             Regex nameRegex;
-            nameRegex = new Regex(@"<span class=""subject"">(.*?)<\/span>");
+            if (url.Contains("8ch"))
+            {
+                nameRegex = new Regex(@"<span class=""subject"">(.*?)<\/span>");
+                ret = nameRegex.Match(fetchedText).Groups[1].Value;
+                if (ret.Contains("p class") || ret == "")
+                {
+                    nameRegex = new Regex(@"<span class=""heading"">(.*?)<\/span>");
+                }
+            }
+            else
+            {
+                nameRegex = new Regex(@"<span class=""subject"">(.*?)<\/span>"); 
+            }
             ret = nameRegex.Match(fetchedText).Groups[1].Value;
             if (ret == "")
             {
-                nameRegex = new Regex(@"<blockquote class=""postMessage"" id="".*?"">(.*?)<\/blockquote>");
-                ret = nameRegex.Match(fetchedText).Groups[1].Value;
-                if (ret.Length > 20)
+                if (url.Contains("8ch"))
                 {
-                    ret = ret.Substring(0, 20);
+                    nameRegex = new Regex(@"<div class=""body"">(.*?)<\/div>");
+                    ret = nameRegex.Match(fetchedText).Groups[1].Value;
+                    if (ret.Contains("body-line ltr"))
+                    {
+                        nameRegex = new Regex(@"<p class=""body-line ltr "">(.*?)<\/p>");
+                        ret = nameRegex.Match(ret).Groups[1].Value;
+                    }
+                }
+                else
+                {
+                    nameRegex = new Regex(@"<blockquote class=""postMessage"" id="".*?"">(.*?)<\/blockquote>");
+                }
+                ret = nameRegex.Match(fetchedText).Groups[1].Value;
+                if (ret.Length > 30)
+                {
+                    ret = ret.Substring(0, 30);
                 }
             }
             if (ret == "")
