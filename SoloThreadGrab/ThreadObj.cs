@@ -67,7 +67,7 @@ namespace SoloThreadGrab
             // Round 2
             if (url.Contains("8ch"))
             {
-                fileRegex = new Regex(@"<a(?: title="".*?(?:webm?|mp4)""|) href=""https:\/\/(.{1,120}\.(?:mp4?|webm))"">");
+                fileRegex = new Regex(@"<a(?: title="".{1,120}(?:webm?|mp4?|jpg?|gif?|png?|jpeg)""|) href=""https:\/\/(.{1,120}\.(?:mp4?|webm?|jpg?|gif?|png?|jpeg))"">");
                 foreach (Match match in fileRegex.Matches(fetchedText))
                 {
                     if (!ret.Contains(match.Groups[1].Value))
@@ -87,7 +87,7 @@ namespace SoloThreadGrab
             {
                 fileRegex = new Regex(@"<a href=""https:\/\/(.{1,111}?\.(?:gif?|webm?|jpeg?|png?|mp4?|jpg))"" target=""_blank"">");
                 count = fileRegex.Matches(fetchedText).Count;
-                fileRegex = new Regex(@"<a(?: title="".{1,120}(?:webm?|mp4)""|) href=""https:\/\/(.{1,120}\.(?:mp4?|webm))"">");
+                fileRegex = new Regex(@"<a(?: title="".{1,120}(?:webm?|mp4?|jpg?|gif?|png?|jpeg)""|) href=""https:\/\/(.{1,120}\.(?:mp4?|webm?|jpg?|gif?|png?|jpeg))"">");
                 count += fileRegex.Matches(fetchedText).Count;
             }
             else
@@ -105,7 +105,7 @@ namespace SoloThreadGrab
 
             if (url.Contains("8ch"))
             {
-                fileRegex = new Regex(@"<img class=""post-image"" src=""(https:\/\/.*?/thumb\/.{1,120}\.(?:jpeg?|gif?|jpg?|png))");
+                fileRegex = new Regex(@"<img class=""post-image"" src=""(https:\/\/.*?/thumb\/.{1,120}\.(?:jpeg?|gif?|jpg?|png?|mp4?|webm))");
             }
             else
             {
@@ -114,6 +114,18 @@ namespace SoloThreadGrab
             foreach (Match match in fileRegex.Matches(fetchedText))
             {
                 ret.Add(match.Groups[1].Value);
+            }
+            // Round 2
+            if (url.Contains("8ch"))
+            {
+                fileRegex = new Regex(@"<img class=""post-image"" src=""(\/file_store\/thumb\/.{1,111}?\.(?:gif?|webm?|jpeg?|png?|mp4?|jpg))""");
+                foreach (Match match in fileRegex.Matches(fetchedText))
+                {
+                    if (!ret.Contains(match.Groups[1].Value))
+                    {
+                        ret.Add(match.Groups[1].Value);
+                    }
+                }
             }
             return ret;
         }

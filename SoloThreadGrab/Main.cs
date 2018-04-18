@@ -445,6 +445,14 @@ namespace SoloThreadGrab
                 folder += "\\" + thread.GetThreadname();
             }
             folder = folder.Replace('/', '#');
+            //folder = folder.Replace('\\', '#');
+            //folder = folder.Replace(':', '#');
+            folder = folder.Replace('*', '#');
+            folder = folder.Replace('"', '#');
+            folder = folder.Replace('?', '#');
+            folder = folder.Replace('<', '#');
+            folder = folder.Replace('>', '#');
+            folder = folder.Replace('|', '#');
             return folder;
         }
         // Create Output Folder or Alert User of Issues
