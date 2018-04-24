@@ -78,25 +78,6 @@ namespace SoloThreadGrab
             }
             return ret;
         }
-        // Get Count of Items
-        public int GetItemCount()
-        {
-            Regex fileRegex;
-            int count;
-            if (url.Contains("8ch"))
-            {
-                fileRegex = new Regex(@"<a href=""https:\/\/(.{1,111}?\.(?:gif?|webm?|jpeg?|png?|mp4?|jpg))"" target=""_blank"">");
-                count = fileRegex.Matches(fetchedText).Count;
-                fileRegex = new Regex(@"<a(?: title="".{1,120}(?:webm?|mp4?|jpg?|gif?|png?|jpeg)""|) href=""https:\/\/(.{1,120}\.(?:mp4?|webm?|jpg?|gif?|png?|jpeg))"">");
-                count += fileRegex.Matches(fetchedText).Count;
-            }
-            else
-            {
-                fileRegex = new Regex(@"(?:a title=.*? href|a href)=\""\/\/(.{1,50}?\.(?:gif?|webm?|jpg?|png))");
-                count = fileRegex.Matches(fetchedText).Count;
-            }            
-            return count;
-        }
         // Get List of All Thumbnail URLs
         public List<string> GetThumbList()
         {

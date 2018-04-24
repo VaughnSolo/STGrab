@@ -81,15 +81,15 @@ namespace SoloThreadGrab
                     ThreadObj threadCheck = new ThreadObj(textNewURL.Text);
                     if (threadCheck.PageFound())
                     {
+                        int count = threadCheck.GetItemList().Count;
                         threadURLs.Add(textNewURL.Text);
                         listMultiLinks.Items.Add(textNewURL.Text);
                         listMultiNames.Items.Add(threadCheck.GetThreadname());
-                        listMultiStatus.Items.Add(threadCheck.GetItemCount());
-                        int count = threadCheck.GetItemCount();
+                        listMultiStatus.Items.Add(threadCheck.GetItemList().Count);                        
                         int thumbCount = threadCheck.GetThumbList().Count;
                         if (count != thumbCount)
                         {
-                            MessageBox.Show("Mismatch: " + count + " : " + thumbCount);
+                            MessageBox.Show("Possible Error: " + count + " images vs " + thumbCount + " thumbs found.");
                         }
                         textNewURL.Text = "";
                     }
